@@ -10,13 +10,15 @@ func _ready() -> void:
 	print("Main -> world_manager = ", world_manager)
 	print("Main -> character = ", character)
 
-	midi_router.world_requested.connect(_on_world_requested)
-	midi_router.movement_input_changed.connect(_on_movement_input_changed)
-	midi_router.fx_value_changed.connect(_on_fx_value_changed)
-	midi_router.photogrammetry_event_requested.connect(_on_photo_event_requested)
-	midi_router.audio_event_requested.connect(_on_audio_event_requested)
+	midi_router.connect("world_requested", _on_world_requested)
+	midi_router.connect("movement_input_changed", _on_movement_input_changed)
+	midi_router.connect("fx_value_changed", _on_fx_value_changed)
+	midi_router.connect("photogrammetry_event_requested", _on_photo_event_requested)
+	midi_router.connect("audio_event_requested", _on_audio_event_requested)
 
 	print("=== MAIN CONNECTED ===")
+
+	world_manager.load_world("world_01")
 
 func _on_world_requested(world_id: String) -> void:
 	print("Main received world -> ", world_id)

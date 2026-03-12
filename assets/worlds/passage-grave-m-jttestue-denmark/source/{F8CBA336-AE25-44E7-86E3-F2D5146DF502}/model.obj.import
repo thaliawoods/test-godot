@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://cmqrwb1wk65xo"
+path="res://.godot/imported/model.obj-4dff74fd11e067591c4930380aca580b.mesh"
+
+[deps]
+
+files=["res://.godot/imported/model.obj-4dff74fd11e067591c4930380aca580b.mesh"]
+
+source_file="res://assets/worlds/passage-grave-m-jttestue-denmark/source/{F8CBA336-AE25-44E7-86E3-F2D5146DF502}/model.obj"
+dest_files=["res://.godot/imported/model.obj-4dff74fd11e067591c4930380aca580b.mesh", "res://.godot/imported/model.obj-4dff74fd11e067591c4930380aca580b.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false
