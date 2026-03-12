@@ -4,7 +4,7 @@ extends Node
 @onready var world_manager = $WorldManager
 @onready var character = $Character
 @onready var photogrammetry_manager = $PhotogrammetryManager
-
+@onready var aud
 func _ready() -> void:
 	print("=== MAIN READY ===")
 	print("Main -> midi_router = ", midi_router)
