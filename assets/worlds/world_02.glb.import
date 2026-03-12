@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://di26okp2iw7xd"
-path="res://.godot/imported/cube_and_cave.glb-2462de0d3e82d1e275ba966878c54b5e.scn"
+uid="uid://dncug0xho6crs"
+path="res://.godot/imported/world_02.glb-e4ba44f0056abef4bf876e5db0d3c092.scn"
 
 [deps]
 
-source_file="res://assets/worlds/cube_and_cave.glb"
-dest_files=["res://.godot/imported/cube_and_cave.glb-2462de0d3e82d1e275ba966878c54b5e.scn"]
+source_file="res://assets/worlds/world_02.glb"
+dest_files=["res://.godot/imported/world_02.glb-e4ba44f0056abef4bf876e5db0d3c092.scn"]
 
 [params]
 

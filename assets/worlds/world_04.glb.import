@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://d3yejp4lu806i"
-path="res://.godot/imported/cave_allegory_bohmsdorf_i.glb-65fe702bd69a056c4e2323eff1d8fe4f.scn"
+path="res://.godot/imported/world_04.glb-7e75eaa4ece8477b23213e173d4bb6ad.scn"
 
 [deps]
 
-source_file="res://assets/worlds/cave_allegory_bohmsdorf_i.glb"
-dest_files=["res://.godot/imported/cave_allegory_bohmsdorf_i.glb-65fe702bd69a056c4e2323eff1d8fe4f.scn"]
+source_file="res://assets/worlds/world_04.glb"
+dest_files=["res://.godot/imported/world_04.glb-7e75eaa4ece8477b23213e173d4bb6ad.scn"]
 
 [params]
 

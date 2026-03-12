@@ -5,7 +5,10 @@ extends Node
 var current_world: Node3D = null
 
 var world_scene_map := {
-	"world_01": preload("res://worlds/world_01.tscn")
+	"world_01": preload("res://worlds/world_01.tscn"),
+	"world_02": preload("res://worlds/world_02.tscn"),
+	"world_03": preload("res://worlds/world_03.tscn"),
+	"world_04": preload("res://worlds/world_04.tscn")
 }
 
 func load_world(world_id: String) -> void:

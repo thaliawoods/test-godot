@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://dncug0xho6crs"
-path="res://.godot/imported/island_-_low_poly.glb-b74c943fa7591d3fa8b1a7856d3541b4.scn"
+uid="uid://di26okp2iw7xd"
+path="res://.godot/imported/world_03.glb-28e3a9ab6b7a79cc485a23f77f00c124.scn"
 
 [deps]
 
-source_file="res://assets/worlds/island_-_low_poly.glb"
-dest_files=["res://.godot/imported/island_-_low_poly.glb-b74c943fa7591d3fa8b1a7856d3541b4.scn"]
+source_file="res://assets/worlds/world_03.glb"
+dest_files=["res://.godot/imported/world_03.glb-28e3a9ab6b7a79cc485a23f77f00c124.scn"]
 
 [params]
 
