@@ -15,10 +15,7 @@ var world_pad_map := {
 	41: "world_02",
 	42: "world_03",
 	43: "world_04",
-	36: "world_05",
-	37: "world_06",
-	38: "world_07",
-	39: "world_08"
+	36: "world_05"
 }
 
 # Pads actuellement vus comme PROGRAM_CHANGE.

@@ -2,20 +2,24 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bc8dtde7qgphc"
-path="res://.godot/imported/Hyper Quarter UV Map-01-01.jpeg-655f9a714c09434bdc4ce4fc279df6c6.ctex"
+uid="uid://55okc1nof2b2"
+path.s3tc="res://.godot/imported/world_05_0.png-a90bc5213af0a7e9a825b62069d6ce45.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
+}
+generator_parameters={
+"md5": "c10a2cc439f05d7b844dc4b0ccae49f0"
 }
 
 [deps]
 
-source_file="res://assets/worlds/hyperbolic-cave/textures/Hyper Quarter UV Map-01-01.jpeg"
-dest_files=["res://.godot/imported/Hyper Quarter UV Map-01-01.jpeg-655f9a714c09434bdc4ce4fc279df6c6.ctex"]
+source_file="res://assets/worlds/fissure-8-leilani-estates-pahoa-hawaii/source/world_05_0.png"
+dest_files=["res://.godot/imported/world_05_0.png-a90bc5213af0a7e9a825b62069d6ce45.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0
@@ -23,7 +27,7 @@ compress/rdo_quality_loss=0.0
 compress/hdr_compression=1
 compress/normal_map=0
 compress/channel_pack=0
-mipmaps/generate=false
+mipmaps/generate=true
 mipmaps/limit=-1
 roughness/mode=0
 roughness/src_normal=""
@@ -37,4 +41,4 @@ process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
-detect_3d/compress_to=1
+detect_3d/compress_to=0

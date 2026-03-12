@@ -8,7 +8,8 @@ var world_scene_map := {
 	"world_01": preload("res://worlds/world_01.tscn"),
 	"world_02": preload("res://worlds/world_02.tscn"),
 	"world_03": preload("res://worlds/world_03.tscn"),
-	"world_04": preload("res://worlds/world_04.tscn")
+	"world_04": preload("res://worlds/world_04.tscn"),
+	"world_05": preload("res://worlds/world_05.tscn")
 }
 
 func load_world(world_id: String) -> void:

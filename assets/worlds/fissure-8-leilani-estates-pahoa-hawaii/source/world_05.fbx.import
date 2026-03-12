@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://cwlrqg0wrhig1"
-path="res://.godot/imported/fissure 8_simplified_3d_mesh.fbx-fbb783c9e92b13f7724f14520a8161d6.scn"
+path="res://.godot/imported/world_05.fbx-eef70627134b54b90e7715dc41a89442.scn"
 
 [deps]
 
-source_file="res://assets/worlds/fissure-8-leilani-estates-pahoa-hawaii/source/fissure 8_simplified_3d_mesh.fbx"
-dest_files=["res://.godot/imported/fissure 8_simplified_3d_mesh.fbx-fbb783c9e92b13f7724f14520a8161d6.scn"]
+source_file="res://assets/worlds/fissure-8-leilani-estates-pahoa-hawaii/source/world_05.fbx"
+dest_files=["res://.godot/imported/world_05.fbx-eef70627134b54b90e7715dc41a89442.scn"]
 
 [params]
 
