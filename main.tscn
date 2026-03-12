@@ -1,0 +1,45 @@
+[gd_scene format=3 uid="uid://comg271og62ie"]
+
+[ext_resource type="Script" uid="uid://spr86l3n4lss" path="res://MidiRouter.gd" id="1_h2yge"]
+[ext_resource type="Script" uid="uid://cwe4k7uc77ybx" path="res://Main.gd" id="1_lquwl"]
+[ext_resource type="Script" uid="uid://dvkce157ad6di" path="res://WorldManager.gd" id="2_1bvp3"]
+[ext_resource type="Script" uid="uid://cp4fjjorehkk2" path="res://WorldHolder.gd" id="3_lquwl"]
+[ext_resource type="Script" uid="uid://4y7xq66orcd3" path="res://Character.gd" id="5_7mycd"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_h2yge"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_1bvp3"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_h2yge"]
+
+[node name="Main" type="Node" unique_id=214949247]
+script = ExtResource("1_lquwl")
+
+[node name="MidiRouter" type="Node" parent="." unique_id=1277454095]
+script = ExtResource("1_h2yge")
+
+[node name="WorldManager" type="Node" parent="." unique_id=1253063779]
+script = ExtResource("2_1bvp3")
+
+[node name="WorldHolder" type="Node3D" parent="." unique_id=170544255]
+script = ExtResource("3_lquwl")
+
+[node name="Character" type="CharacterBody3D" parent="." unique_id=123044860]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+script = ExtResource("5_7mycd")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Character" unique_id=589371030]
+shape = SubResource("CapsuleShape3D_h2yge")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Character" unique_id=405326269]
+mesh = SubResource("CapsuleMesh_1bvp3")
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1794919235]
+transform = Transform3D(1, 0, 0, 0, 0.9396927, 0.34202015, 0, -0.34202015, 0.9396927, 0, 6, 10)
+current = true
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=983962322]
+
+[node name="Ground" type="MeshInstance3D" parent="." unique_id=992209199]
+transform = Transform3D(10, 0, 0, 0, 0.2, 0, 0, 0, 10, 0, 0, 0)
+mesh = SubResource("BoxMesh_h2yge")
