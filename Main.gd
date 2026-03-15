@@ -4,19 +4,21 @@ extends Node
 @onready var world_manager = $WorldManager
 @onready var character = $Character
 @onready var photogrammetry_manager = $PhotogrammetryManager
-@onready var aud
+@onready var audio_manager = $AudioManager
+
 func _ready() -> void:
 	print("=== MAIN READY ===")
 	print("Main -> midi_router = ", midi_router)
 	print("Main -> world_manager = ", world_manager)
 	print("Main -> character = ", character)
 	print("Main -> photogrammetry_manager = ", photogrammetry_manager)
+	print("Main -> audio_manager = ", audio_manager)
 
-	midi_router.connect("world_requested", _on_world_requested)
-	midi_router.connect("movement_input_changed", _on_movement_input_changed)
-	midi_router.connect("fx_value_changed", _on_fx_value_changed)
-	midi_router.connect("photogrammetry_event_requested", _on_photo_event_requested)
-	midi_router.connect("audio_event_requested", _on_audio_event_requested)
+	midi_router.world_requested.connect(_on_world_requested)
+	midi_router.movement_input_changed.connect(_on_movement_input_changed)
+	midi_router.fx_value_changed.connect(_on_fx_value_changed)
+	midi_router.photogrammetry_event_requested.connect(_on_photo_event_requested)
+	midi_router.audio_event_requested.connect(_on_audio_event_requested)
 
 	print("=== MAIN CONNECTED ===")
 
@@ -41,3 +43,4 @@ func _on_photo_event_requested(event_id: String, velocity: int) -> void:
 
 func _on_audio_event_requested(event_id: String, velocity: int) -> void:
 	print("Main received audio -> ", event_id, " velocity=", velocity)
+	audio_manager.trigger_event(event_id, velocity)

@@ -21,7 +21,11 @@ func load_world(world_id: String) -> void:
 		push_warning("Monde introuvable : %s" % world_id)
 		return
 
-	current_world = world_scene_map[world_id].instantiate()
-	world_holder.add_child(current_world)
+	current_world = world_scene_map[world_id].instantiate() as Node3D
 
+	if current_world == null:
+		push_warning("La scène du monde n'est pas un Node3D : %s" % world_id)
+		return
+
+	world_holder.add_child(current_world)
 	print("Monde chargé : ", world_id)
