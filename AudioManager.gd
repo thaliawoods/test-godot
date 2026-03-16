@@ -1,16 +1,11 @@
 extends Node
 
-var audio_map := {
-	"audio_event_01": "res://audio/audio_event_01.wav",
-	"audio_event_02": "res://audio/audio_event_02.wav"
-}
-
 func trigger_event(event_id: String, velocity: int) -> void:
-	if not audio_map.has(event_id):
-		push_warning("Audio event not found: %s" % event_id)
-		return
+	var number = event_id.replace("audio_event_0", "")
+	if number == event_id:
+		number = event_id.replace("audio_event_", "")
 
-	var path: String = audio_map[event_id]
+	var path := "res://audio/audio_event_%s.wav" % number
 	var stream: AudioStream = load(path)
 
 	if stream == null:
