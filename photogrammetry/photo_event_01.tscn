@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://cci83uckc33nf"]
+
+[ext_resource type="PackedScene" uid="uid://q6jkykmsr157" path="res://photogrammetry/photo_event_01.fbx" id="2_po030"]
+
+[node name="PhotoEvent1" type="Node3D" unique_id=560393758]
+
+[node name="photo_event_01" parent="." unique_id=409753793 instance=ExtResource("2_po030")]
+transform = Transform3D(0.009999999, 0, 0, 0, 0.01, 0, 0, 0, 0.009999999, 0, 0, 0)
+
+[node name="3DModel" parent="photo_event_01" index="0" unique_id=1419670470]
+transform = Transform3D(200, 0, 0, 0, 200, 1.509958e-05, 0, -1.509958e-05, 200, 0, 0, 0)
+
+[node name="Camera" parent="photo_event_01" index="1" unique_id=382771056]
+visible = false
+
+[node name="Light" parent="photo_event_01" index="2" unique_id=100189968]
+visible = false
+
+[editable path="photo_event_01"]

@@ -1,0 +1,33 @@
+[gd_scene format=3 uid="uid://lft5mr48kajv"]
+
+[ext_resource type="PackedScene" uid="uid://dncug0xho6crs" path="res://assets/worlds/world_02.glb" id="1_d1a7n"]
+[ext_resource type="Script" uid="uid://b6w28s03vq63x" path="res://world_02_collision_builder.gd" id="1_oyuxk"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_uwy0k"]
+size = Vector3(200, 10, 200)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_oyuxk"]
+size = Vector3(180, 8, 120)
+
+[node name="World2" type="Node3D" unique_id=1039705860]
+script = ExtResource("1_oyuxk")
+
+[node name="Sketchfab_Scene" parent="." unique_id=1652375384 instance=ExtResource("1_d1a7n")]
+transform = Transform3D(100, 0, 0, 0, 100, 0, 0, 0, 100, -0.00038015842, 5.9604645e-08, -0.0016614795)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=153521634]
+
+[node name="SpawnPoint" type="Marker3D" parent="." unique_id=171208219]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, 0)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=1104886026]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=57390193]
+shape = SubResource("BoxShape3D_uwy0k")
+
+[node name="WalkableSlope_01" type="StaticBody3D" parent="." unique_id=343602862]
+transform = Transform3D(1, 0, 0, 0, 0.95105654, 0.309017, 0, -0.309017, 0.95105654, 0, 8, -40)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WalkableSlope_01" unique_id=1736716792]
+transform = Transform3D(1, 0, 0, 0, 0.9396926, 0.34202012, 0, -0.34202012, 0.9396926, 0, 0, 0)
+shape = SubResource("BoxShape3D_oyuxk")

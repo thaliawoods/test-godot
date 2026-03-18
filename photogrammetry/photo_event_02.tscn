@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://213lfl5vovxc"]
+
+[ext_resource type="PackedScene" uid="uid://dsj0iaaqkpnv5" path="res://photogrammetry/photo_event_02.fbx" id="1_03mp6"]
+
+[node name="PhotoEvent2" type="Node3D" unique_id=555950253]
+
+[node name="photo_event_02" parent="." unique_id=898229400 instance=ExtResource("1_03mp6")]
+
+[node name="3DModel" parent="photo_event_02" index="0" unique_id=1453842178]
+transform = Transform3D(100, 0, 0, 0, 100, 7.54979e-06, 0, -7.54979e-06, 100, 0, -1, 0)
+
+[node name="Light" parent="photo_event_02" index="2" unique_id=821802325]
+visible = false
+
+[editable path="photo_event_02"]

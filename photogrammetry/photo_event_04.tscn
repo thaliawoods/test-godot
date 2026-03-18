@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://mhlqdmupvn25"]
+
+[ext_resource type="PackedScene" uid="uid://ekmhqf5476wg" path="res://photogrammetry/photo_event_04.fbx" id="1_582sd"]
+
+[node name="PhotoEvent4" type="Node3D" unique_id=922238523]
+
+[node name="photo_event_04" parent="." unique_id=1582294077 instance=ExtResource("1_582sd")]
+
+[node name="Light" parent="photo_event_04" index="1" unique_id=1056790756]
+visible = false
+
+[editable path="photo_event_04"]

@@ -1,0 +1,72 @@
+[gd_scene format=3 uid="uid://comg271og62ie"]
+
+[ext_resource type="Script" uid="uid://spr86l3n4lss" path="res://MidiRouter.gd" id="1_h2yge"]
+[ext_resource type="Script" uid="uid://cwe4k7uc77ybx" path="res://Main.gd" id="1_lquwl"]
+[ext_resource type="Script" uid="uid://dvkce157ad6di" path="res://WorldManager.gd" id="2_1bvp3"]
+[ext_resource type="Script" uid="uid://cp4fjjorehkk2" path="res://WorldHolder.gd" id="3_lquwl"]
+[ext_resource type="Script" uid="uid://4y7xq66orcd3" path="res://Character.gd" id="5_7mycd"]
+[ext_resource type="Script" uid="uid://bysc0pqyw1utn" path="res://PhotogrammetryManager.gd" id="6_7mycd"]
+[ext_resource type="Script" uid="uid://ttncofp65ps4" path="res://AudioManager.gd" id="7_272bh"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_7mycd"]
+radius = 0.45
+height = 1.605
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_1bvp3"]
+radius = 0.45
+height = 1.605
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_272bh"]
+size = Vector3(200, 1, 200)
+
+[sub_resource type="BoxMesh" id="BoxMesh_5vw27"]
+size = Vector3(200, 1, 200)
+
+[node name="Main" type="Node" unique_id=214949247]
+script = ExtResource("1_lquwl")
+
+[node name="MidiRouter" type="Node" parent="." unique_id=1277454095]
+script = ExtResource("1_h2yge")
+
+[node name="WorldManager" type="Node" parent="." unique_id=1253063779]
+script = ExtResource("2_1bvp3")
+
+[node name="WorldHolder" type="Node3D" parent="." unique_id=170544255]
+script = ExtResource("3_lquwl")
+
+[node name="Character" type="CharacterBody3D" parent="." unique_id=123044860]
+visible = false
+script = ExtResource("5_7mycd")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Character" unique_id=589371030]
+shape = SubResource("CapsuleShape3D_7mycd")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Character" unique_id=405326269]
+mesh = SubResource("CapsuleMesh_1bvp3")
+
+[node name="Head" type="Node3D" parent="Character" unique_id=1279679827]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Character/Head" unique_id=1390613602]
+current = true
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=983962322]
+transform = Transform3D(0.009479631, -0.0031838033, 0, 0.0031838033, 0.009479631, 0, 0, 0, 0.01, 0, 0, 0)
+
+[node name="PhotogrammetryManager" type="Node3D" parent="." unique_id=483058391]
+script = ExtResource("6_7mycd")
+
+[node name="AudioManager" type="Node" parent="." unique_id=580263358]
+script = ExtResource("7_272bh")
+
+[node name="Ground" type="StaticBody3D" parent="." unique_id=104740873]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+visible = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground" unique_id=1462064234]
+visible = false
+shape = SubResource("BoxShape3D_272bh")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground" unique_id=910280493]
+visible = false
+mesh = SubResource("BoxMesh_5vw27")

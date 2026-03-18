@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://ire75rb6ycar"]
+
+[ext_resource type="AudioStream" uid="uid://dhc22aixw4gqi" path="res://audio/audio_event_2.wav" id="1_yltwd"]
+
+[node name="AudioEvent2" type="Node" unique_id=1984098826]
+
+[node name="AudioEvent02" type="AudioStreamPlayer" parent="." unique_id=146470047]
+stream = ExtResource("1_yltwd")
+volume_db = 24.0
+pitch_scale = 0.95
+autoplay = true

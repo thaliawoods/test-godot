@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://dqm6uo6v7v2kc"]
+
+[ext_resource type="PackedScene" uid="uid://31xdgsbpsmi3" path="res://photogrammetry/photo_event_06.fbx" id="1_i523k"]
+
+[node name="PhotoEvent6" type="Node3D" unique_id=466404185]
+
+[node name="photo_event_06" parent="." unique_id=684372690 instance=ExtResource("1_i523k")]
+
+[node name="Camera" parent="photo_event_06" index="1" unique_id=2094446363]
+visible = false
+
+[node name="Light" parent="photo_event_06" index="2" unique_id=1829242795]
+visible = false
+
+[editable path="photo_event_06"]
