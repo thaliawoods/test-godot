@@ -77,6 +77,40 @@ func _ready() -> void:
 	print("MidiRouter prêt")
 	print("Périphériques MIDI : ", OS.get_connected_midi_inputs())
 
+# --- Équivalents clavier ---
+# Mondes : 7, 8, 9, 0, -
+var keyboard_world_map := {
+	KEY_7: "world_01",
+	KEY_8: "world_02",
+	KEY_9: "world_03",
+	KEY_0: "world_04",
+	KEY_MINUS: "world_05"
+}
+
+# Photogrammetrie (touches blanches) : 1-6
+var keyboard_photo_map := {
+	KEY_1: "photo_event_01",
+	KEY_2: "photo_event_02",
+	KEY_3: "photo_event_03",
+	KEY_4: "photo_event_04",
+	KEY_5: "photo_event_05",
+	KEY_6: "photo_event_06"
+}
+
+# Audio (touches noires) : Q, E, R, T, Y, U, I, O, P, G
+var keyboard_audio_map := {
+	KEY_Q: "audio_event_01",
+	KEY_E: "audio_event_02",
+	KEY_R: "audio_event_03",
+	KEY_T: "audio_event_04",
+	KEY_Y: "audio_event_05",
+	KEY_U: "audio_event_06",
+	KEY_I: "audio_event_07",
+	KEY_O: "audio_event_08",
+	KEY_P: "audio_event_09",
+	KEY_G: "audio_event_10"
+}
+
 func _input(event: InputEvent) -> void:
 	if event is InputEventMIDI:
 		print(
@@ -87,6 +121,34 @@ func _input(event: InputEvent) -> void:
 			" value=", event.controller_value
 		)
 		_handle_midi_event(event)
+		return
+
+	if event is InputEventKey and event.pressed and not event.echo:
+		_handle_keyboard_event(event)
+
+func _handle_keyboard_event(event: InputEventKey) -> void:
+	var keycode := event.keycode
+	var physical := event.physical_keycode
+	# Utiliser physical_keycode (fiable sur tous les layouts clavier)
+	var key := physical if physical != KEY_NONE else keycode
+
+	if keyboard_world_map.has(key):
+		var world_id: String = keyboard_world_map[key]
+		print("World requested (keyboard) -> ", world_id)
+		world_requested.emit(world_id)
+		return
+
+	if keyboard_photo_map.has(key):
+		var photo_event_id: String = keyboard_photo_map[key]
+		print("Photogrammetry event (keyboard) -> ", photo_event_id)
+		photogrammetry_event_requested.emit(photo_event_id, 100)
+		return
+
+	if keyboard_audio_map.has(key):
+		var audio_event_id: String = keyboard_audio_map[key]
+		print("Audio event (keyboard) -> ", audio_event_id)
+		audio_event_requested.emit(audio_event_id, 100)
+		return
 
 func _handle_midi_event(event: InputEventMIDI) -> void:
 	match event.message:
