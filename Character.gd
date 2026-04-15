@@ -30,13 +30,13 @@ func _apply_movement_settings() -> void:
 func _physics_process(delta: float) -> void:
 	var input_vec := Vector2.ZERO
 
-	if Input.is_key_pressed(KEY_D):
+	if Input.is_key_pressed(KEY_RIGHT):
 		input_vec.x += 1.0
-	if Input.is_key_pressed(KEY_A):
+	if Input.is_key_pressed(KEY_LEFT):
 		input_vec.x -= 1.0
-	if Input.is_key_pressed(KEY_W):
+	if Input.is_key_pressed(KEY_UP):
 		input_vec.y += 1.0
-	if Input.is_key_pressed(KEY_S):
+	if Input.is_key_pressed(KEY_DOWN):
 		input_vec.y -= 1.0
 
 	if input_vec.length() == 0.0:
