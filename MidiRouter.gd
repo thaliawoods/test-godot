@@ -26,8 +26,7 @@ var world_program_map := {
 	3: "world_04",
 	4: "world_05",
 	5: "world_06",
-	6: "world_07",
-	7: "world_08"
+	6: "world_07"
 }
 
 var knob_fx_map := {
@@ -84,7 +83,9 @@ var keyboard_world_map := {
 	KEY_8: "world_02",
 	KEY_9: "world_03",
 	KEY_0: "world_04",
-	KEY_MINUS: "world_05"
+	KEY_MINUS: "world_05",
+	KEY_V: "world_06",
+	KEY_B: "world_07"
 }
 
 # Photogrammetrie (touches blanches) : 1-6
