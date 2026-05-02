@@ -19,16 +19,12 @@ const WORLD_02_SNAP_LENGTH := 0.6
 const WORLD_02_SLOPE_ANGLE := 65.0
 
 func _ready() -> void:
-	print("=== MAIN READY ===")
-
 	if midi_router != null:
 		midi_router.world_requested.connect(_on_world_requested)
 		midi_router.movement_input_changed.connect(_on_movement_input_changed)
 		midi_router.fx_value_changed.connect(_on_fx_value_changed)
 		midi_router.photogrammetry_event_requested.connect(_on_photo_event_requested)
 		midi_router.audio_event_requested.connect(_on_audio_event_requested)
-
-	print("=== MAIN CONNECTED ===")
 
 	await _load_and_setup_world(DEFAULT_WORLD)
 
@@ -92,10 +88,18 @@ func _apply_world_setup(world_id: String) -> void:
 		camera.position = Vector3.ZERO
 		camera.rotation = Vector3.ZERO
 
+	_apply_world_movement_mode(world_id)
 	_apply_world_movement_settings(world_id)
 
-	print("World setup applied -> ", world_id)
-	print("Character spawned at -> ", character.global_position)
+func _apply_world_movement_mode(world_id: String) -> void:
+	if character == null:
+		return
+	match world_id:
+		"world_01":
+			character.set_movement_mode("physics")
+		_:
+			character.set_movement_mode("hover")
+			character.set_world_movement_settings(12.0, 0.8, 75.0)
 
 func _apply_world_movement_settings(world_id: String) -> void:
 	if character == null:
@@ -116,7 +120,6 @@ func _apply_world_movement_settings(world_id: String) -> void:
 			)
 
 func _on_world_requested(world_id: String) -> void:
-	print("Main received world -> ", world_id)
 	await _load_and_setup_world(world_id)
 
 func _on_movement_input_changed(move_x: float, move_y: float) -> void:
@@ -124,7 +127,7 @@ func _on_movement_input_changed(move_x: float, move_y: float) -> void:
 		character.set_midi_move_input(move_x, move_y)
 
 func _on_fx_value_changed(fx_name: String, normalized_value: float) -> void:
-	print("Main received FX -> ", fx_name, " = ", normalized_value)
+	pass
 
 func _on_photo_event_requested(event_id: String, velocity: int) -> void:
 	if photogrammetry_manager != null:
