@@ -76,40 +76,34 @@ func _ready() -> void:
 	print("MidiRouter prêt")
 	print("Périphériques MIDI : ", OS.get_connected_midi_inputs())
 
-# --- Équivalents clavier ---
-# Mondes : 7, 8, 9, 0, -
 var keyboard_world_map := {
-	KEY_7: "world_01",
-	KEY_8: "world_02",
-	KEY_9: "world_03",
-	KEY_0: "world_04",
-	KEY_MINUS: "world_05",
-	KEY_V: "world_06",
-	KEY_B: "world_07"
+	KEY_1: "world_01",
+	KEY_2: "world_02",
+	KEY_3: "world_03",
+	KEY_4: "world_04",
+	KEY_5: "world_05",
+	KEY_6: "world_06",
+	KEY_7: "world_07"
 }
 
-# Photogrammetrie (touches blanches) : 1-6
 var keyboard_photo_map := {
-	KEY_1: "photo_event_01",
-	KEY_2: "photo_event_02",
-	KEY_3: "photo_event_03",
-	KEY_4: "photo_event_04",
-	KEY_5: "photo_event_05",
-	KEY_6: "photo_event_06"
+	KEY_A: "photo_event_01",
+	KEY_S: "photo_event_02",
+	KEY_D: "photo_event_03",
+	KEY_F: "photo_event_04",
+	KEY_G: "photo_event_05",
+	KEY_H: "photo_event_06"
 }
 
-# Audio (touches noires) : Q, E, R, T, Y, U, I, O, P, G
 var keyboard_audio_map := {
 	KEY_Q: "audio_event_01",
-	KEY_E: "audio_event_02",
-	KEY_R: "audio_event_03",
-	KEY_T: "audio_event_04",
-	KEY_Y: "audio_event_05",
-	KEY_U: "audio_event_06",
-	KEY_I: "audio_event_07",
-	KEY_O: "audio_event_08",
-	KEY_P: "audio_event_09",
-	KEY_G: "audio_event_10"
+	KEY_W: "audio_event_02",
+	KEY_E: "audio_event_03",
+	KEY_R: "audio_event_04",
+	KEY_T: "audio_event_05",
+	KEY_Y: "audio_event_06",
+	KEY_U: "audio_event_07",
+	KEY_I: "audio_event_08"
 }
 
 func _input(event: InputEvent) -> void:
