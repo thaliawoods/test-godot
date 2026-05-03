@@ -10,13 +10,9 @@ extends Node
 
 const DEFAULT_WORLD := "world_01"
 
-const DEFAULT_MOVE_SPEED := 4.5
-const DEFAULT_SNAP_LENGTH := 0.2
-const DEFAULT_SLOPE_ANGLE := 45.0
-
-const WORLD_02_MOVE_SPEED := 8.5
-const WORLD_02_SNAP_LENGTH := 0.6
-const WORLD_02_SLOPE_ANGLE := 65.0
+const DEFAULT_MOVE_SPEED := 8.0
+const DEFAULT_SNAP_LENGTH := 0.6
+const DEFAULT_SLOPE_ANGLE := 75.0
 
 func _ready() -> void:
 	if midi_router != null:
@@ -89,7 +85,6 @@ func _apply_world_setup(world_id: String) -> void:
 		camera.rotation = Vector3.ZERO
 
 	_apply_world_movement_mode(world_id)
-	_apply_world_movement_settings(world_id)
 
 func _apply_world_movement_mode(world_id: String) -> void:
 	if character == null:
@@ -97,27 +92,25 @@ func _apply_world_movement_mode(world_id: String) -> void:
 	match world_id:
 		"world_01":
 			character.set_movement_mode("physics")
+			character.set_world_movement_settings(DEFAULT_MOVE_SPEED, DEFAULT_SNAP_LENGTH, DEFAULT_SLOPE_ANGLE)
+		"world_02":
+			character.set_movement_mode("hover")
+			character.set_world_movement_settings(36.0, 0.8, 75.0)
+		"world_03":
+			character.set_movement_mode("hover")
+			character.set_world_movement_settings(24.0, 0.8, 75.0)
 		_:
 			character.set_movement_mode("hover")
-			character.set_world_movement_settings(12.0, 0.8, 75.0)
+			character.set_world_movement_settings(8.0, 0.8, 75.0)
 
 func _apply_world_movement_settings(world_id: String) -> void:
 	if character == null:
 		return
-
-	match world_id:
-		"world_02":
-			character.set_world_movement_settings(
-				WORLD_02_MOVE_SPEED,
-				WORLD_02_SNAP_LENGTH,
-				WORLD_02_SLOPE_ANGLE
-			)
-		_:
-			character.set_world_movement_settings(
-				DEFAULT_MOVE_SPEED,
-				DEFAULT_SNAP_LENGTH,
-				DEFAULT_SLOPE_ANGLE
-			)
+	character.set_world_movement_settings(
+		DEFAULT_MOVE_SPEED,
+		DEFAULT_SNAP_LENGTH,
+		DEFAULT_SLOPE_ANGLE
+	)
 
 func _on_world_requested(world_id: String) -> void:
 	await _load_and_setup_world(world_id)

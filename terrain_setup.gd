@@ -7,6 +7,7 @@ const SMALL_WORLD_THRESHOLD := 5.0
 @export var auto_spawn_enabled := true
 @export var auto_ground_enabled := true
 @export var auto_walls_enabled := true
+@export var auto_mesh_collision_enabled := true
 
 func _ready() -> void:
 	var meshes := _collect_meshes(self)
@@ -24,7 +25,7 @@ func _ready() -> void:
 			var scale_factor: float = WORLD_TARGET_SIZE / max_extent
 			scale = Vector3(scale_factor, scale_factor, scale_factor)
 
-	if not auto_spawn_enabled and not auto_ground_enabled and not auto_walls_enabled:
+	if not auto_spawn_enabled and not auto_ground_enabled and not auto_walls_enabled and not auto_mesh_collision_enabled:
 		return
 
 	await get_tree().process_frame
@@ -43,6 +44,25 @@ func _ready() -> void:
 
 	if auto_walls_enabled:
 		_create_boundary_walls(aabb)
+
+	if auto_mesh_collision_enabled:
+		_create_mesh_collision(meshes)
+
+func _create_mesh_collision(meshes: Array[MeshInstance3D]) -> void:
+	for mi: MeshInstance3D in meshes:
+		if mi.mesh == null:
+			continue
+		var body := StaticBody3D.new()
+		body.collision_layer = 1
+		body.collision_mask = 0
+		var col := CollisionShape3D.new()
+		var shape := mi.mesh.create_trimesh_shape()
+		if shape == null:
+			body.queue_free()
+			continue
+		col.shape = shape
+		mi.add_child(body)
+		body.add_child(col)
 
 func _auto_place_spawn(aabb: AABB) -> void:
 	var spawn_point: Marker3D = get_node_or_null("SpawnPoint") as Marker3D

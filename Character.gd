@@ -8,6 +8,7 @@ var midi_move := Vector2.ZERO
 @export var max_slope_angle_deg: float = 45.0
 @export var ground_snap_speed: float = 15.0
 @export var hover_height: float = 1.0
+@export var mouse_sensitivity: float = 0.002
 
 @onready var head: Node3D = $Head
 @onready var camera: Camera3D = $Head/Camera3D
@@ -17,7 +18,21 @@ var movement_mode: MovementMode = MovementMode.PHYSICS
 var target_y: float = 0.0
 
 func _ready() -> void:
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	_apply_movement_settings()
+
+func _input(event: InputEvent) -> void:
+	if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
+		rotate_y(-event.relative.x * mouse_sensitivity)
+		if head != null:
+			head.rotate_x(-event.relative.y * mouse_sensitivity)
+			head.rotation.x = clamp(head.rotation.x, deg_to_rad(-89.0), deg_to_rad(89.0))
+
+	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+
+	if event is InputEventKey and event.pressed and event.keycode == KEY_ESCAPE:
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
 func set_movement_mode(mode: String) -> void:
 	if mode == "hover":
