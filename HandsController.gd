@@ -4,8 +4,8 @@ const HAND_COUNT := 14
 const HAND_PATH_TEMPLATE := "res://assets/hands_v2/hand_%02d.fbx"
 const HAND_TARGET_SIZE := 0.302
 const SAVE_FILE_PATH := "user://hands_calibration.json"
-const MOUNT_LEFT_BASE_OVERRIDE := Vector3(-0.28, -0.25, -0.60)
-const MOUNT_RIGHT_BASE_OVERRIDE := Vector3(0.28, -0.25, -0.60)
+const MOUNT_LEFT_BASE_OVERRIDE := Vector3(-0.28, -0.35, -0.60)
+const MOUNT_RIGHT_BASE_OVERRIDE := Vector3(0.28, -0.35, -0.60)
 const SWAP_LR_DEFAULT: bool = false
 
 const MESH_INDIVIDUAL_SWAP: Dictionary = {

@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://bfpldw1w3xqdt"
+path="res://.godot/imported/22_05_2026.obj-f7f5dd405ae5e8912dafccbe88cd18ae.mesh"
+
+[deps]
+
+files=["res://.godot/imported/22_05_2026.obj-f7f5dd405ae5e8912dafccbe88cd18ae.mesh"]
+
+source_file="res://photogrammetry/lampadaire/22_05_2026.obj"
+dest_files=["res://.godot/imported/22_05_2026.obj-f7f5dd405ae5e8912dafccbe88cd18ae.mesh", "res://.godot/imported/22_05_2026.obj-f7f5dd405ae5e8912dafccbe88cd18ae.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

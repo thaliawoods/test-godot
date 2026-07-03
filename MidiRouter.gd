@@ -14,21 +14,26 @@ signal hand_right_flip_y_requested()
 
 var joy_x: float = 0.0
 var joy_y: float = 0.0
+const JOY_DEADZONE := 0.08
+var _last_joy_msg_ms: int = 0
+const JOY_IDLE_TIMEOUT_MS := 300
 
 # Si tes pads reviennent plus tard en NOTE_ON, on garde aussi cette map.
-var world_pad_map := {
+var world_pad_map: Dictionary = {
 	40: "world_01",
 	41: "world_02",
 	42: "world_03",
 	43: "world_04",
 	36: "world_05",
 	37: "world_06",
-	38: "world_07",
-	39: "world_08"
+	38: "world_07"
 }
 
+const HAND_CYCLE_MIDI_NOTE := 39
+const HAND_CYCLE_MIDI_PROGRAM := 7
+
 # Pads actuellement vus comme PROGRAM_CHANGE.
-var world_program_map := {
+var world_program_map: Dictionary = {
 	0: "world_01",
 	1: "world_02",
 	2: "world_03",
@@ -38,18 +43,18 @@ var world_program_map := {
 	6: "world_07"
 }
 
-var knob_fx_map := {
+var knob_fx_map: Dictionary = {
 	70: "visual_distortion",
 	71: "visual_saturation",
 	72: "visual_blur",
 	73: "visual_exposure",
 	74: "audio_filter",
 	75: "audio_reverb",
-	76: "audio_distortion",
-	77: "event_density"
+	76: "camera_pitch",
+	77: "camera_yaw"
 }
 
-var white_note_map := {
+var white_note_map: Dictionary = {
 	48: "photo_event_01",
 	50: "photo_event_02",
 	52: "photo_event_03",
@@ -64,10 +69,11 @@ var white_note_map := {
 	67: "photo_event_12",
 	69: "photo_event_13",
 	71: "photo_event_14",
-	72: "photo_event_15"
+	72: "photo_event_15",
+	74: "photo_event_07"
 }
 
-var black_note_map := {
+var black_note_map: Dictionary = {
 	49: "audio_event_01",
 	51: "audio_event_02",
 	54: "audio_event_03",
@@ -319,6 +325,11 @@ func _handle_note_on(event: InputEventMIDI) -> void:
 
 	var pitch := event.pitch
 
+	if pitch == HAND_CYCLE_MIDI_NOTE:
+		print("Hand cycle requested (note pad 8)")
+		hand_right_cycle_requested.emit()
+		return
+
 	# Si les pads reviennent un jour en NOTE_ON
 	if world_pad_map.has(pitch):
 		var world_id: String = world_pad_map[pitch]
@@ -334,9 +345,11 @@ func _handle_note_on(event: InputEventMIDI) -> void:
 
 	if black_note_map.has(pitch):
 		var audio_event_id: String = black_note_map[pitch]
-		print("Audio event -> ", audio_event_id)
+		print("Audio event -> ", audio_event_id, " (pitch=", pitch, " vel=", event.velocity, ")")
 		audio_event_requested.emit(audio_event_id, event.velocity)
 		return
+
+	print("[NOTE_ON UNMAPPED] pitch=", pitch, " vel=", event.velocity)
 
 func _handle_control_change(event: InputEventMIDI) -> void:
 	var cc := event.controller_number
@@ -345,6 +358,7 @@ func _handle_control_change(event: InputEventMIDI) -> void:
 	# Joystick Y
 	if cc == 1:
 		joy_y = _normalize_cc_to_signed(value)
+		_last_joy_msg_ms = Time.get_ticks_msec()
 		_emit_movement_changed()
 		return
 
@@ -357,14 +371,24 @@ func _handle_control_change(event: InputEventMIDI) -> void:
 		return
 
 func _handle_program_change(event: InputEventMIDI) -> void:
-	var program := event.controller_value
+	# Godot 4: pour PROGRAM_CHANGE, le numéro de programme est dans event.pitch
+	# (pas dans event.controller_value qui reste à 0 pour ce type de message)
+	var program := event.pitch
+	if program == 0 and event.controller_value > 0:
+		program = event.controller_value
 
 	print(
-		"PROGRAM_CHANGE DEBUG -> pitch=", event.pitch,
+		"PROGRAM_CHANGE DEBUG -> program=", program,
+		" (pitch=", event.pitch,
 		" vel=", event.velocity,
 		" cc=", event.controller_number,
-		" value=", event.controller_value
+		" value=", event.controller_value, ")"
 	)
+
+	if program == HAND_CYCLE_MIDI_PROGRAM:
+		print("Hand cycle requested (program pad 8)")
+		hand_right_cycle_requested.emit()
+		return
 
 	if world_program_map.has(program):
 		var world_id: String = world_program_map[program]
@@ -375,13 +399,39 @@ func _handle_program_change(event: InputEventMIDI) -> void:
 
 func _handle_pitch_bend(event: InputEventMIDI) -> void:
 	joy_x = _normalize_pitch_bend_to_signed(event.pitch)
+	_last_joy_msg_ms = Time.get_ticks_msec()
 	_emit_movement_changed()
 
+func _process(_delta: float) -> void:
+	# Le joystick MPK mini 3 n'a pas de ressort de rappel. Si aucun message
+	# n'arrive depuis JOY_IDLE_TIMEOUT_MS, on considère que l'utilisateur a lâché
+	# et on force l'arrêt (envoi de zéros).
+	if joy_x == 0.0 and joy_y == 0.0:
+		return
+	if _last_joy_msg_ms == 0:
+		return
+	if Time.get_ticks_msec() - _last_joy_msg_ms >= JOY_IDLE_TIMEOUT_MS:
+		joy_x = 0.0
+		joy_y = 0.0
+		_emit_movement_changed()
+
 func _emit_movement_changed() -> void:
-	var x := _apply_deadzone(joy_x, 0.08)
-	var y := _apply_deadzone(joy_y, 0.08)
-	print("MidiRouter emit movement -> x=", x, " y=", y)
-	movement_input_changed.emit(x, y)
+	# Binaire comme les flèches clavier : au-delà du seuil = ±1, sinon 0.
+	# Y inversé : sur MPK mini 3, pousser le stick "vers l'avant" envoie une petite valeur CC1.
+	const THRESHOLD := 0.25
+	var x_out: float = 0.0
+	if joy_x > THRESHOLD:
+		x_out = 1.0
+	elif joy_x < -THRESHOLD:
+		x_out = -1.0
+	var y_out: float = 0.0
+	var joy_y_inv: float = -joy_y
+	if joy_y_inv > THRESHOLD:
+		y_out = 1.0
+	elif joy_y_inv < -THRESHOLD:
+		y_out = -1.0
+	print("[BINARY_JOY_V2] emit x=", x_out, " y=", y_out, " (from joy_x=", joy_x, " joy_y=", joy_y, ")")
+	movement_input_changed.emit(x_out, y_out)
 
 func _normalize_cc_to_unit(value: int) -> float:
 	return clamp(float(value) / 127.0, 0.0, 1.0)

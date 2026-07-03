@@ -12,15 +12,20 @@ var midi_move := Vector2.ZERO
 
 @onready var head: Node3D = $Head
 @onready var camera: Camera3D = $Head/Camera3D
+@onready var hands_node: Node3D = get_node_or_null("Head/Camera3D/Hands") as Node3D
 
 enum MovementMode { PHYSICS, HOVER }
 var movement_mode: MovementMode = MovementMode.PHYSICS
 var target_y: float = 0.0
 var hover_climb_enabled: bool = false
+var _hands_base_pos: Vector3 = Vector3.ZERO
+var _bob_time: float = 0.0
 
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	_apply_movement_settings()
+	if hands_node != null:
+		_hands_base_pos = hands_node.position
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
@@ -110,6 +115,21 @@ func _physics_process(delta: float) -> void:
 		_process_physics(delta)
 
 	move_and_slide()
+
+	_update_hands_bobbing(delta)
+
+func _update_hands_bobbing(delta: float) -> void:
+	if hands_node == null:
+		return
+	var flat_speed: float = Vector2(velocity.x, velocity.z).length()
+	if flat_speed > 0.5:
+		_bob_time += delta * 7.0
+		var bob_y: float = sin(_bob_time) * 0.015
+		var bob_x: float = cos(_bob_time * 0.5) * 0.008
+		hands_node.position = _hands_base_pos + Vector3(bob_x, bob_y, 0.0)
+	else:
+		_bob_time = 0.0
+		hands_node.position = hands_node.position.lerp(_hands_base_pos, delta * 6.0)
 
 func _process_physics(delta: float) -> void:
 	if not is_on_floor():
