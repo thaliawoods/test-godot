@@ -60,22 +60,22 @@ var knob_fx_map: Dictionary = {
 }
 
 var white_note_map: Dictionary = {
-	48: "photo_event_01",
-	50: "photo_event_02",
-	52: "photo_event_03",
-	53: "photo_event_04",
-	55: "photo_event_05",
-	57: "photo_event_06",
-	59: "photo_event_07",
-	60: "photo_event_08",
-	62: "photo_event_09",
-	64: "photo_event_10",
-	65: "photo_event_11",
-	67: "photo_event_12",
-	69: "photo_event_13",
-	71: "photo_event_14",
-	72: "photo_event_15",
-	74: "photo_event_07"
+	48: "colonnes",       # C3
+	50: "maison",         # D3
+	52: "pelouse_1",      # E3
+	53: "porte",          # F3
+	55: "statue",         # G3
+	57: "pelouse_2",      # A3
+	59: "lampadaire",     # B3
+	60: "alexandre",      # C4
+	62: "cheyenne",       # D4
+	64: "emma",           # E4
+	65: "lucien",         # F4
+	67: "mayess",         # G4
+	69: "pierre",         # A4
+	71: "tagada_1",       # B4
+	72: "tagada_2",       # C5
+	74: "tagada_3"        # D5 (Octave+ requis)
 }
 
 var black_note_map: Dictionary = {
@@ -88,7 +88,8 @@ var black_note_map: Dictionary = {
 	63: "audio_event_07",
 	66: "audio_event_08",
 	68: "audio_event_09",
-	70: "audio_event_10"
+	70: "audio_event_10",
+	73: "audio_event_11"
 }
 
 var _midi_hud: CanvasLayer

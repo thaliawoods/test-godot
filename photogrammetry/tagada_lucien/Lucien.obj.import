@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://dr5nwxjarst6m"
+path="res://.godot/imported/Lucien.obj-b43e00f9887161e7a973d7f30f10f1bd.mesh"
+
+[deps]
+
+files=["res://.godot/imported/Lucien.obj-b43e00f9887161e7a973d7f30f10f1bd.mesh"]
+
+source_file="res://photogrammetry/tagada_lucien/Lucien.obj"
+dest_files=["res://.godot/imported/Lucien.obj-b43e00f9887161e7a973d7f30f10f1bd.mesh", "res://.godot/imported/Lucien.obj-b43e00f9887161e7a973d7f30f10f1bd.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false
