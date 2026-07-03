@@ -7,6 +7,7 @@ extends Node
 @onready var audio_manager = $AudioManager
 @onready var head: Node3D = $Character/Head
 @onready var camera: Camera3D = $Character/Head/Camera3D
+@onready var hands_controller: Node3D = get_node_or_null("Character/Head/Camera3D/Hands") as Node3D
 
 const DEFAULT_WORLD := "world_01"
 
@@ -21,6 +22,12 @@ func _ready() -> void:
 		midi_router.fx_value_changed.connect(_on_fx_value_changed)
 		midi_router.photogrammetry_event_requested.connect(_on_photo_event_requested)
 		midi_router.audio_event_requested.connect(_on_audio_event_requested)
+		midi_router.hand_left_cycle_requested.connect(_on_hand_left_cycle)
+		midi_router.hand_right_cycle_requested.connect(_on_hand_right_cycle)
+		midi_router.hand_left_flip_x_requested.connect(_on_hand_left_flip_x)
+		midi_router.hand_right_flip_x_requested.connect(_on_hand_right_flip_x)
+		midi_router.hand_left_flip_y_requested.connect(_on_hand_left_flip_y)
+		midi_router.hand_right_flip_y_requested.connect(_on_hand_right_flip_y)
 
 	await _load_and_setup_world(DEFAULT_WORLD)
 
@@ -135,3 +142,27 @@ func _on_photo_event_requested(event_id: String, velocity: int) -> void:
 func _on_audio_event_requested(event_id: String, velocity: int) -> void:
 	if audio_manager != null:
 		audio_manager.trigger_event(event_id, velocity)
+
+func _on_hand_left_cycle() -> void:
+	if hands_controller != null and hands_controller.has_method("cycle_left"):
+		hands_controller.cycle_left()
+
+func _on_hand_right_cycle() -> void:
+	if hands_controller != null and hands_controller.has_method("cycle_right"):
+		hands_controller.cycle_right()
+
+func _on_hand_left_flip_x() -> void:
+	if hands_controller != null and hands_controller.has_method("flip_left_x"):
+		hands_controller.flip_left_x()
+
+func _on_hand_right_flip_x() -> void:
+	if hands_controller != null and hands_controller.has_method("flip_right_x"):
+		hands_controller.flip_right_x()
+
+func _on_hand_left_flip_y() -> void:
+	if hands_controller != null and hands_controller.has_method("flip_left_y"):
+		hands_controller.flip_left_y()
+
+func _on_hand_right_flip_y() -> void:
+	if hands_controller != null and hands_controller.has_method("flip_right_y"):
+		hands_controller.flip_right_y()

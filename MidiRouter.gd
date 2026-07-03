@@ -5,6 +5,12 @@ signal photogrammetry_event_requested(event_id: String, velocity: int)
 signal audio_event_requested(event_id: String, velocity: int)
 signal fx_value_changed(fx_name: String, normalized_value: float)
 signal movement_input_changed(move_x: float, move_y: float)
+signal hand_left_cycle_requested()
+signal hand_right_cycle_requested()
+signal hand_left_flip_x_requested()
+signal hand_right_flip_x_requested()
+signal hand_left_flip_y_requested()
+signal hand_right_flip_y_requested()
 
 var joy_x: float = 0.0
 var joy_y: float = 0.0
@@ -211,6 +217,13 @@ var keyboard_audio_map := {
 	KEY_I: "audio_event_08"
 }
 
+const HAND_LEFT_KEY := KEY_J
+const HAND_RIGHT_KEY := KEY_K
+const HAND_LEFT_FLIP_X_KEY := KEY_N
+const HAND_RIGHT_FLIP_X_KEY := KEY_M
+const HAND_LEFT_FLIP_Y_KEY := KEY_B
+const HAND_RIGHT_FLIP_Y_KEY := KEY_COMMA
+
 var _user_gesture_done := false
 
 func _input(event: InputEvent) -> void:
@@ -259,6 +272,32 @@ func _handle_keyboard_event(event: InputEventKey) -> void:
 		var audio_event_id: String = keyboard_audio_map[key]
 		print("Audio event (keyboard) -> ", audio_event_id)
 		audio_event_requested.emit(audio_event_id, 100)
+		return
+
+	if key == HAND_LEFT_KEY:
+		print("Hand left cycle (keyboard)")
+		hand_left_cycle_requested.emit()
+		return
+
+	if key == HAND_RIGHT_KEY:
+		print("Hand right cycle (keyboard)")
+		hand_right_cycle_requested.emit()
+		return
+
+	if key == HAND_LEFT_FLIP_X_KEY:
+		hand_left_flip_x_requested.emit()
+		return
+
+	if key == HAND_RIGHT_FLIP_X_KEY:
+		hand_right_flip_x_requested.emit()
+		return
+
+	if key == HAND_LEFT_FLIP_Y_KEY:
+		hand_left_flip_y_requested.emit()
+		return
+
+	if key == HAND_RIGHT_FLIP_Y_KEY:
+		hand_right_flip_y_requested.emit()
 		return
 
 func _handle_midi_event(event: InputEventMIDI) -> void:
