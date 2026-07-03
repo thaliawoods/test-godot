@@ -15,7 +15,8 @@ var photo_scene_map := {
 		"photo_event_03": "res://photogrammetry/photo_event_03.tscn",
 		"photo_event_04": "res://photogrammetry/photo_event_04.tscn",
 		"photo_event_05": "res://photogrammetry/photo_event_05.tscn",
-		"photo_event_06": "res://photogrammetry/photo_event_06.tscn"
+		"photo_event_06": "res://photogrammetry/photo_event_06.tscn",
+		"photo_event_07": "res://photogrammetry/photo_event_07.tscn"
 	},
 	"world_02": {
 		"photo_event_01": "res://photogrammetry/photo_event_01.tscn",
@@ -23,7 +24,8 @@ var photo_scene_map := {
 		"photo_event_03": "res://photogrammetry/photo_event_03.tscn",
 		"photo_event_04": "res://photogrammetry/photo_event_04.tscn",
 		"photo_event_05": "res://photogrammetry/photo_event_05.tscn",
-		"photo_event_06": "res://photogrammetry/photo_event_06.tscn"
+		"photo_event_06": "res://photogrammetry/photo_event_06.tscn",
+		"photo_event_07": "res://photogrammetry/photo_event_07.tscn"
 	},
 	"world_03": {
 		"photo_event_01": "res://photogrammetry/photo_event_01.tscn",
@@ -31,7 +33,8 @@ var photo_scene_map := {
 		"photo_event_03": "res://photogrammetry/photo_event_03.tscn",
 		"photo_event_04": "res://photogrammetry/photo_event_04.tscn",
 		"photo_event_05": "res://photogrammetry/photo_event_05.tscn",
-		"photo_event_06": "res://photogrammetry/photo_event_06.tscn"
+		"photo_event_06": "res://photogrammetry/photo_event_06.tscn",
+		"photo_event_07": "res://photogrammetry/photo_event_07.tscn"
 	},
 	"world_04": {
 		"photo_event_01": "res://photogrammetry/photo_event_01.tscn",
@@ -39,7 +42,8 @@ var photo_scene_map := {
 		"photo_event_03": "res://photogrammetry/photo_event_03.tscn",
 		"photo_event_04": "res://photogrammetry/photo_event_04.tscn",
 		"photo_event_05": "res://photogrammetry/photo_event_05.tscn",
-		"photo_event_06": "res://photogrammetry/photo_event_06.tscn"
+		"photo_event_06": "res://photogrammetry/photo_event_06.tscn",
+		"photo_event_07": "res://photogrammetry/photo_event_07.tscn"
 	},
 	"world_05": {
 		"photo_event_01": "res://photogrammetry/photo_event_01.tscn",
@@ -47,7 +51,8 @@ var photo_scene_map := {
 		"photo_event_03": "res://photogrammetry/photo_event_03.tscn",
 		"photo_event_04": "res://photogrammetry/photo_event_04.tscn",
 		"photo_event_05": "res://photogrammetry/photo_event_05.tscn",
-		"photo_event_06": "res://photogrammetry/photo_event_06.tscn"
+		"photo_event_06": "res://photogrammetry/photo_event_06.tscn",
+		"photo_event_07": "res://photogrammetry/photo_event_07.tscn"
 	},
 	"world_06": {
 		"photo_event_01": "res://photogrammetry/photo_event_01.tscn",
@@ -55,7 +60,8 @@ var photo_scene_map := {
 		"photo_event_03": "res://photogrammetry/photo_event_03.tscn",
 		"photo_event_04": "res://photogrammetry/photo_event_04.tscn",
 		"photo_event_05": "res://photogrammetry/photo_event_05.tscn",
-		"photo_event_06": "res://photogrammetry/photo_event_06.tscn"
+		"photo_event_06": "res://photogrammetry/photo_event_06.tscn",
+		"photo_event_07": "res://photogrammetry/photo_event_07.tscn"
 	},
 	"world_07": {
 		"photo_event_01": "res://photogrammetry/photo_event_01.tscn",
@@ -63,7 +69,8 @@ var photo_scene_map := {
 		"photo_event_03": "res://photogrammetry/photo_event_03.tscn",
 		"photo_event_04": "res://photogrammetry/photo_event_04.tscn",
 		"photo_event_05": "res://photogrammetry/photo_event_05.tscn",
-		"photo_event_06": "res://photogrammetry/photo_event_06.tscn"
+		"photo_event_06": "res://photogrammetry/photo_event_06.tscn",
+		"photo_event_07": "res://photogrammetry/photo_event_07.tscn"
 	}
 }
 

@@ -3,3 +3,6 @@
 .export/
 test-godot
 .claude/
+
+# Local Netlify folder
+.netlify
