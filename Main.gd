@@ -272,9 +272,28 @@ func _apply_audio_fx() -> void:
 	var bus: int = AudioServer.get_bus_index("Effects")
 	if bus < 0:
 		return
+	# Le knob 74 (audio_filter) contrôle filter cutoff + résonance + drive
+	# de la distortion. Knob à 1.0 = son clair. Knob à 0.0 = filtre fermé,
+	# résonance auto-oscillante et overdrive puissant.
+	var f_val: float = _fx_current["audio_filter"]
 	var filter: AudioEffectFilter = AudioServer.get_bus_effect(bus, 0) as AudioEffectFilter
-	var reverb: AudioEffectReverb = AudioServer.get_bus_effect(bus, 1) as AudioEffectReverb
 	if filter != null:
-		filter.cutoff_hz = lerpf(200.0, 20000.0, _fx_current["audio_filter"])
+		filter.cutoff_hz = lerpf(60.0, 20000.0, f_val * f_val)  # courbe expo, ferme plus vite
+		filter.resonance = lerpf(4.0, 0.5, f_val)               # 4.0 = auto-oscillation
+	var distortion: AudioEffectDistortion = AudioServer.get_bus_effect(bus, 1) as AudioEffectDistortion
+	if distortion != null:
+		# Distortion s'active quand knob passe sous 0.5, très forte sous 0.2
+		var drive_amt: float = clampf((0.5 - f_val) * 2.0, 0.0, 1.0)
+		distortion.drive = drive_amt * 0.9
+		distortion.pre_gain = drive_amt * 12.0   # +12 dB de gain d'entrée
+		distortion.post_gain = -drive_amt * 6.0  # -6 dB pour compenser
+	# Le knob 75 (audio_reverb) contrôle chorus + reverb ensemble.
+	# Knob à 0.0 = sec. Knob à 1.0 = chorus dense + reverb caverneuse.
+	var r_val: float = _fx_current["audio_reverb"]
+	var chorus: AudioEffectChorus = AudioServer.get_bus_effect(bus, 2) as AudioEffectChorus
+	if chorus != null:
+		chorus.wet = r_val * 0.6   # chorus max 60% wet pour rester musical
+	var reverb: AudioEffectReverb = AudioServer.get_bus_effect(bus, 3) as AudioEffectReverb
 	if reverb != null:
-		reverb.wet = _fx_current["audio_reverb"]
+		reverb.wet = r_val * 0.9   # reverb max 90% wet
+		reverb.damping = lerpf(0.3, 0.6, r_val)  # amortit plus si beaucoup de reverb

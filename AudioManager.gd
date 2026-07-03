@@ -14,22 +14,41 @@ func _ensure_effects_bus() -> void:
 	AudioServer.add_bus(idx)
 	AudioServer.set_bus_name(idx, "Effects")
 	AudioServer.set_bus_send(idx, "Master")
+	# [0] Filtre passe-bas avec résonance dynamique (contrôlé par knob 74)
 	var filter: AudioEffectLowPassFilter = AudioEffectLowPassFilter.new()
 	filter.cutoff_hz = 20000.0
 	filter.resonance = 0.5
 	AudioServer.add_bus_effect(idx, filter)
+	# [1] Distortion overdrive (drive contrôlé dynamiquement selon knob 74)
+	var distortion: AudioEffectDistortion = AudioEffectDistortion.new()
+	distortion.mode = AudioEffectDistortion.MODE_OVERDRIVE
+	distortion.pre_gain = 0.0
+	distortion.drive = 0.0
+	distortion.post_gain = 0.0
+	AudioServer.add_bus_effect(idx, distortion)
+	# [2] Chorus large (profondeur contrôlée dynamiquement selon knob 75)
+	var chorus: AudioEffectChorus = AudioEffectChorus.new()
+	chorus.wet = 0.0
+	chorus.dry = 1.0
+	chorus.voice_count = 3
+	AudioServer.add_bus_effect(idx, chorus)
+	# [3] Reverb très caverneuse (contrôlée par knob 75)
 	var reverb: AudioEffectReverb = AudioEffectReverb.new()
 	reverb.wet = 0.0
 	reverb.dry = 1.0
-	reverb.room_size = 0.8
+	reverb.room_size = 0.9
+	reverb.damping = 0.3
+	reverb.spread = 1.0
+	reverb.predelay_msec = 40.0
 	AudioServer.add_bus_effect(idx, reverb)
+	# [4] Limiter pour éviter le clipping avec toute cette distortion
 	var limiter: AudioEffectLimiter = AudioEffectLimiter.new()
 	limiter.ceiling_db = -0.3
 	limiter.threshold_db = -3.0
 	limiter.soft_clip_db = 2.0
 	AudioServer.add_bus_effect(idx, limiter)
 	AudioServer.set_bus_volume_db(idx, 6.0)
-	print("[AudioManager] Bus 'Effects' créé (filter + reverb + limiter, +6 dB)")
+	print("[AudioManager] Bus 'Effects' créé (filter + distortion + chorus + reverb + limiter)")
 
 func trigger_event(event_id: String, velocity: int) -> void:
 	print("[AudioManager] trigger_event called: id=", event_id, " vel=", velocity)
