@@ -1,5 +1,9 @@
 extends Node
 
+# Suivi des sons actuellement en lecture par event_id, pour le toggle
+# (rejouer la même note = arrêter le son en cours).
+var _playing: Dictionary = {}
+
 func _ready() -> void:
 	_ensure_effects_bus()
 
@@ -29,6 +33,17 @@ func _ensure_effects_bus() -> void:
 
 func trigger_event(event_id: String, velocity: int) -> void:
 	print("[AudioManager] trigger_event called: id=", event_id, " vel=", velocity)
+
+	# Toggle : si le son est déjà en cours pour cet event, on l'arrête.
+	if _playing.has(event_id):
+		var existing: AudioStreamPlayer = _playing[event_id]
+		if is_instance_valid(existing):
+			existing.stop()
+			existing.queue_free()
+		_playing.erase(event_id)
+		print("[AudioManager] Toggled OFF: ", event_id)
+		return
+
 	var number: String = event_id.replace("audio_event_0", "")
 	if number == event_id:
 		number = event_id.replace("audio_event_", "")
@@ -52,10 +67,14 @@ func trigger_event(event_id: String, velocity: int) -> void:
 
 	add_child(player)
 	player.play()
+	_playing[event_id] = player
 
 	print("[AudioManager] Playing ", path, " on bus '", bus_name, "' vol_db=", vol_db, " stream_len=", stream.get_length())
 
+	# Nettoyage à la fin naturelle du son.
 	player.finished.connect(func():
 		if is_instance_valid(player):
 			player.queue_free()
+		if _playing.get(event_id) == player:
+			_playing.erase(event_id)
 	)

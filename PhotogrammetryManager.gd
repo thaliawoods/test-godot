@@ -24,8 +24,7 @@ var photo_scene_map := {
 		"mayess":     "res://photogrammetry/photo_event_12.tscn",
 		"pierre":     "res://photogrammetry/photo_event_13.tscn",
 		"tagada_1":   "res://photogrammetry/photo_event_14.tscn",
-		"tagada_2":   "res://photogrammetry/photo_event_15.tscn",
-		"tagada_3":   "res://photogrammetry/photo_event_16.tscn"
+		"tagada_2":   "res://photogrammetry/photo_event_15.tscn"
 	},
 	"world_02": {
 		"colonnes":   "res://photogrammetry/photo_event_01.tscn",
@@ -42,8 +41,7 @@ var photo_scene_map := {
 		"mayess":     "res://photogrammetry/photo_event_12.tscn",
 		"pierre":     "res://photogrammetry/photo_event_13.tscn",
 		"tagada_1":   "res://photogrammetry/photo_event_14.tscn",
-		"tagada_2":   "res://photogrammetry/photo_event_15.tscn",
-		"tagada_3":   "res://photogrammetry/photo_event_16.tscn"
+		"tagada_2":   "res://photogrammetry/photo_event_15.tscn"
 	},
 	"world_03": {
 		"colonnes":   "res://photogrammetry/photo_event_01.tscn",
@@ -60,8 +58,7 @@ var photo_scene_map := {
 		"mayess":     "res://photogrammetry/photo_event_12.tscn",
 		"pierre":     "res://photogrammetry/photo_event_13.tscn",
 		"tagada_1":   "res://photogrammetry/photo_event_14.tscn",
-		"tagada_2":   "res://photogrammetry/photo_event_15.tscn",
-		"tagada_3":   "res://photogrammetry/photo_event_16.tscn"
+		"tagada_2":   "res://photogrammetry/photo_event_15.tscn"
 	},
 	"world_04": {
 		"colonnes":   "res://photogrammetry/photo_event_01.tscn",
@@ -78,8 +75,7 @@ var photo_scene_map := {
 		"mayess":     "res://photogrammetry/photo_event_12.tscn",
 		"pierre":     "res://photogrammetry/photo_event_13.tscn",
 		"tagada_1":   "res://photogrammetry/photo_event_14.tscn",
-		"tagada_2":   "res://photogrammetry/photo_event_15.tscn",
-		"tagada_3":   "res://photogrammetry/photo_event_16.tscn"
+		"tagada_2":   "res://photogrammetry/photo_event_15.tscn"
 	},
 	"world_05": {
 		"colonnes":   "res://photogrammetry/photo_event_01.tscn",
@@ -96,8 +92,7 @@ var photo_scene_map := {
 		"mayess":     "res://photogrammetry/photo_event_12.tscn",
 		"pierre":     "res://photogrammetry/photo_event_13.tscn",
 		"tagada_1":   "res://photogrammetry/photo_event_14.tscn",
-		"tagada_2":   "res://photogrammetry/photo_event_15.tscn",
-		"tagada_3":   "res://photogrammetry/photo_event_16.tscn"
+		"tagada_2":   "res://photogrammetry/photo_event_15.tscn"
 	},
 	"world_06": {
 		"colonnes":   "res://photogrammetry/photo_event_01.tscn",
@@ -114,8 +109,7 @@ var photo_scene_map := {
 		"mayess":     "res://photogrammetry/photo_event_12.tscn",
 		"pierre":     "res://photogrammetry/photo_event_13.tscn",
 		"tagada_1":   "res://photogrammetry/photo_event_14.tscn",
-		"tagada_2":   "res://photogrammetry/photo_event_15.tscn",
-		"tagada_3":   "res://photogrammetry/photo_event_16.tscn"
+		"tagada_2":   "res://photogrammetry/photo_event_15.tscn"
 	},
 	"world_07": {
 		"colonnes":   "res://photogrammetry/photo_event_01.tscn",
@@ -132,8 +126,7 @@ var photo_scene_map := {
 		"mayess":     "res://photogrammetry/photo_event_12.tscn",
 		"pierre":     "res://photogrammetry/photo_event_13.tscn",
 		"tagada_1":   "res://photogrammetry/photo_event_14.tscn",
-		"tagada_2":   "res://photogrammetry/photo_event_15.tscn",
-		"tagada_3":   "res://photogrammetry/photo_event_16.tscn"
+		"tagada_2":   "res://photogrammetry/photo_event_15.tscn"
 	}
 }
 

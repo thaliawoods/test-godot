@@ -74,8 +74,7 @@ var white_note_map: Dictionary = {
 	67: "mayess",         # G4
 	69: "pierre",         # A4
 	71: "tagada_1",       # B4
-	72: "tagada_2",       # C5
-	74: "tagada_3"        # D5 (Octave+ requis)
+	72: "tagada_2"        # C5
 }
 
 var black_note_map: Dictionary = {
