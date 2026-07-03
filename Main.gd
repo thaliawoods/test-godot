@@ -71,7 +71,9 @@ func _apply_world_setup(world_id: String) -> void:
 	var spawn_point: Node = current_world.get_node_or_null("SpawnPoint")
 
 	if spawn_point != null and spawn_point is Marker3D:
-		character.global_position = (spawn_point as Marker3D).global_position
+		var marker: Marker3D = spawn_point as Marker3D
+		character.global_position = marker.global_position
+		character.rotation.y = marker.rotation.y
 	else:
 		push_warning("SpawnPoint introuvable dans " + world_id + ", position par défaut utilisée")
 		character.global_position = Vector3(0.0, 5.0, 0.0)
@@ -92,16 +94,20 @@ func _apply_world_movement_mode(world_id: String) -> void:
 	match world_id:
 		"world_01":
 			character.set_movement_mode("physics")
-			character.set_world_movement_settings(DEFAULT_MOVE_SPEED, DEFAULT_SNAP_LENGTH, DEFAULT_SLOPE_ANGLE)
+			character.set_world_movement_settings(DEFAULT_MOVE_SPEED, DEFAULT_SNAP_LENGTH, DEFAULT_SLOPE_ANGLE, 1.0)
 		"world_02":
 			character.set_movement_mode("hover")
-			character.set_world_movement_settings(36.0, 0.8, 75.0)
+			character.set_world_movement_settings(36.0, 0.8, 75.0, 1.0)
 		"world_03":
 			character.set_movement_mode("hover")
-			character.set_world_movement_settings(24.0, 0.8, 75.0)
+			character.set_world_movement_settings(24.0, 0.8, 75.0, 1.0)
+		"world_06", "world_07":
+			character.set_movement_mode("hover")
+			character.set_world_movement_settings(72.0, 1.5, 75.0, 5.0)
+			character.set_hover_climb(true)
 		_:
 			character.set_movement_mode("hover")
-			character.set_world_movement_settings(8.0, 0.8, 75.0)
+			character.set_world_movement_settings(8.0, 0.8, 75.0, 1.0)
 
 func _apply_world_movement_settings(world_id: String) -> void:
 	if character == null:

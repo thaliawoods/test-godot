@@ -16,6 +16,7 @@ var midi_move := Vector2.ZERO
 enum MovementMode { PHYSICS, HOVER }
 var movement_mode: MovementMode = MovementMode.PHYSICS
 var target_y: float = 0.0
+var hover_climb_enabled: bool = false
 
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -39,19 +40,28 @@ func set_movement_mode(mode: String) -> void:
 		movement_mode = MovementMode.HOVER
 		collision_mask = 2
 		collision_layer = 2
+		hover_climb_enabled = false
 	else:
 		movement_mode = MovementMode.PHYSICS
 		collision_mask = 1
 		collision_layer = 1
+		hover_climb_enabled = false
 		_apply_movement_settings()
+
+func set_hover_climb(enabled: bool) -> void:
+	hover_climb_enabled = enabled
+	if movement_mode == MovementMode.HOVER:
+		collision_mask = 0 if enabled else 2
 
 func set_midi_move_input(move_x: float, move_y: float) -> void:
 	midi_move = Vector2(move_x, move_y)
 
-func set_world_movement_settings(new_move_speed: float, new_snap_length: float, new_slope_angle_deg: float) -> void:
+func set_world_movement_settings(new_move_speed: float, new_snap_length: float, new_slope_angle_deg: float, new_hover_height: float = -1.0) -> void:
 	move_speed = new_move_speed
 	floor_snap_length_value = new_snap_length
 	max_slope_angle_deg = new_slope_angle_deg
+	if new_hover_height > 0.0:
+		hover_height = new_hover_height
 	_apply_movement_settings()
 
 func _apply_movement_settings() -> void:
@@ -116,8 +126,62 @@ func _process_hover() -> void:
 	query.exclude = [get_rid()]
 	var result := space_state.intersect_ray(query)
 
+	var accept_hit: bool = false
 	if result.size() > 0:
-		target_y = result["position"].y + hover_height
+		var normal: Vector3 = result.get("normal", Vector3.UP)
+		if not hover_climb_enabled or normal.y > 0.3:
+			accept_hit = true
+
+	if not accept_hit and hover_climb_enabled:
+		ray_origin = global_position + Vector3(0, 200.0, 0)
+		ray_end = global_position + Vector3(0, -1500.0, 0)
+		query = PhysicsRayQueryParameters3D.create(ray_origin, ray_end)
+		query.exclude = [get_rid()]
+		result = space_state.intersect_ray(query)
+		if result.size() > 0:
+			var normal2: Vector3 = result.get("normal", Vector3.UP)
+			if normal2.y > 0.3:
+				accept_hit = true
+
+	if accept_hit:
+		target_y = (result["position"] as Vector3).y + hover_height
+
+	if hover_climb_enabled:
+		var ground_y: float = target_y - hover_height
+		var flat_vel := Vector3(velocity.x, 0.0, velocity.z)
+		if flat_vel.length_squared() > 4.0:
+			var forward_dir: Vector3 = flat_vel.normalized()
+			var max_top_y: float = -1e9
+			var probe_distances: Array = [4.0, 10.0, 18.0]
+			for pd: float in probe_distances:
+				var probe_pos: Vector3 = global_position + forward_dir * pd
+				var probe_query := PhysicsRayQueryParameters3D.create(
+					probe_pos + Vector3(0.0, 400.0, 0.0),
+					probe_pos + Vector3(0.0, -400.0, 0.0)
+				)
+				probe_query.exclude = [get_rid()]
+				var probe_result := space_state.intersect_ray(probe_query)
+				if probe_result.size() > 0:
+					var normal: Vector3 = probe_result.get("normal", Vector3.UP)
+					if normal.y > 0.2:
+						var top_y: float = (probe_result["position"] as Vector3).y
+						if top_y > max_top_y:
+							max_top_y = top_y
+			if max_top_y > -1e8 and max_top_y > ground_y + 3.0:
+				var climb_target: float = max_top_y + hover_height + 3.0
+				target_y = maxf(target_y, climb_target)
 
 	var current_y := global_position.y
 	velocity.y = (target_y - current_y) * ground_snap_speed
+
+func _sample_ground_y(space_state: PhysicsDirectSpaceState3D, pos: Vector3) -> float:
+	var ray_origin := pos + Vector3(0.0, 60.0, 0.0)
+	var ray_end := pos + Vector3(0.0, -200.0, 0.0)
+	var query := PhysicsRayQueryParameters3D.create(ray_origin, ray_end)
+	query.exclude = [get_rid()]
+	var result := space_state.intersect_ray(query)
+	if result.size() > 0:
+		var normal: Vector3 = result.get("normal", Vector3.UP)
+		if normal.y > 0.3:
+			return (result["position"] as Vector3).y
+	return pos.y - hover_height
