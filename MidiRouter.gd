@@ -211,12 +211,21 @@ var keyboard_world_map := {
 }
 
 var keyboard_photo_map := {
-	KEY_A: "photo_event_01",
-	KEY_S: "photo_event_02",
-	KEY_D: "photo_event_03",
-	KEY_F: "photo_event_04",
-	KEY_G: "photo_event_05",
-	KEY_H: "photo_event_06"
+	KEY_A: "colonnes",
+	KEY_S: "maison",
+	KEY_D: "pelouse_1",
+	KEY_F: "porte",
+	KEY_G: "statue",
+	KEY_H: "pelouse_2",
+	KEY_J: "lampadaire",
+	KEY_K: "alexandre",
+	KEY_L: "cheyenne",
+	KEY_Z: "emma",
+	KEY_X: "lucien",
+	KEY_C: "mayess",
+	KEY_V: "pierre",
+	KEY_B: "tagada_1",
+	KEY_N: "tagada_2"
 }
 
 var keyboard_audio_map := {
@@ -227,15 +236,10 @@ var keyboard_audio_map := {
 	KEY_T: "audio_event_05",
 	KEY_Y: "audio_event_06",
 	KEY_U: "audio_event_07",
-	KEY_I: "audio_event_08"
+	KEY_I: "audio_event_08",
+	KEY_O: "audio_event_09",
+	KEY_P: "audio_event_10"
 }
-
-const HAND_LEFT_KEY := KEY_J
-const HAND_RIGHT_KEY := KEY_K
-const HAND_LEFT_FLIP_X_KEY := KEY_N
-const HAND_RIGHT_FLIP_X_KEY := KEY_M
-const HAND_LEFT_FLIP_Y_KEY := KEY_B
-const HAND_RIGHT_FLIP_Y_KEY := KEY_COMMA
 
 var _user_gesture_done := false
 
@@ -287,31 +291,6 @@ func _handle_keyboard_event(event: InputEventKey) -> void:
 		audio_event_requested.emit(audio_event_id, 100)
 		return
 
-	if key == HAND_LEFT_KEY:
-		print("Hand left cycle (keyboard)")
-		hand_left_cycle_requested.emit()
-		return
-
-	if key == HAND_RIGHT_KEY:
-		print("Hand right cycle (keyboard)")
-		hand_right_cycle_requested.emit()
-		return
-
-	if key == HAND_LEFT_FLIP_X_KEY:
-		hand_left_flip_x_requested.emit()
-		return
-
-	if key == HAND_RIGHT_FLIP_X_KEY:
-		hand_right_flip_x_requested.emit()
-		return
-
-	if key == HAND_LEFT_FLIP_Y_KEY:
-		hand_left_flip_y_requested.emit()
-		return
-
-	if key == HAND_RIGHT_FLIP_Y_KEY:
-		hand_right_flip_y_requested.emit()
-		return
 
 func _handle_midi_event(event: InputEventMIDI) -> void:
 	match event.message:
