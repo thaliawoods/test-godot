@@ -152,6 +152,11 @@ func _auto_place(node: Node3D) -> void:
 			if scaled_height < MIN_HEIGHT:
 				scale_factor = MIN_HEIGHT / height_extent
 				print("FLAT object: new scale_factor -> ", scale_factor)
+		# Multiplicateur d'échelle spécifique à l'objet (metadata "scale_multiplier")
+		if node.has_meta("scale_multiplier"):
+			var mult: float = float(node.get_meta("scale_multiplier"))
+			scale_factor *= mult
+			print("scale_multiplier meta -> ×", mult, " | final scale_factor -> ", scale_factor)
 		node.scale = Vector3(scale_factor, scale_factor, scale_factor)
 	else:
 		node.scale = Vector3(10, 10, 10)

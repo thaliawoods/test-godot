@@ -14,9 +14,14 @@ signal hand_right_flip_y_requested()
 
 var joy_x: float = 0.0
 var joy_y: float = 0.0
-const JOY_DEADZONE := 0.08
-var _last_joy_msg_ms: int = 0
-const JOY_IDLE_TIMEOUT_MS := 300
+
+# Config joystick MPK mini 3 :
+#   X (pitch bend) : bi-directionnel, 0=gauche, 8192=centre, 16383=droite
+#   Y (CC1)        : uni-directionnel, 0..127 = uniquement forward
+# → Recule impossible via le joystick : l'utilisateur tourne la caméra
+#   pour changer de direction. Simple deadzone suffit.
+const JOY_DEADZONE_X := 0.20
+const JOY_DEADZONE_Y := 0.15
 
 # Si tes pads reviennent plus tard en NOTE_ON, on garde aussi cette map.
 var world_pad_map: Dictionary = {
@@ -116,23 +121,26 @@ func _build_midi_hud() -> void:
 	_midi_hud_panel.offset_bottom = 140.0
 
 	var sb := StyleBoxFlat.new()
-	sb.bg_color = Color(0, 0, 0, 0.45)
+	sb.bg_color = Color(0, 0, 0, 0.25)
 	sb.set_corner_radius_all(8)
 	sb.set_border_width_all(1)
-	sb.border_color = Color(1, 1, 1, 0.12)
+	sb.border_color = Color(1, 1, 1, 0.08)
 	_midi_hud_panel.add_theme_stylebox_override("panel", sb)
 	_midi_hud.add_child(_midi_hud_panel)
 
 	var margin := MarginContainer.new()
-	margin.add_theme_constant_override("margin_left", 18)
-	margin.add_theme_constant_override("margin_right", 18)
-	margin.add_theme_constant_override("margin_top", 12)
-	margin.add_theme_constant_override("margin_bottom", 12)
+	margin.add_theme_constant_override("margin_left", 24)
+	margin.add_theme_constant_override("margin_right", 24)
+	margin.add_theme_constant_override("margin_top", 16)
+	margin.add_theme_constant_override("margin_bottom", 16)
 	_midi_hud_panel.add_child(margin)
 
 	_midi_hud_label = Label.new()
-	_midi_hud_label.add_theme_color_override("font_color", Color(1, 1, 1, 0.9))
-	_midi_hud_label.add_theme_font_size_override("font_size", 16)
+	_midi_hud_label.add_theme_color_override("font_color", Color(1, 1, 1, 0.85))
+	var tutorial_font: Font = load("res://assets/fonts/Adelphe-Trouble-FructidorRegular.otf") as Font
+	if tutorial_font != null:
+		_midi_hud_label.add_theme_font_override("font", tutorial_font)
+	_midi_hud_label.add_theme_font_size_override("font_size", 18)
 	_midi_hud_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	margin.add_child(_midi_hud_label)
 
@@ -355,10 +363,9 @@ func _handle_control_change(event: InputEventMIDI) -> void:
 	var cc := event.controller_number
 	var value := event.controller_value
 
-	# Joystick Y
+	# Joystick Y (uni-directionnel : val 0..127 → 0..1, forward uniquement)
 	if cc == 1:
-		joy_y = _normalize_cc_to_signed(value)
-		_last_joy_msg_ms = Time.get_ticks_msec()
+		joy_y = _normalize_cc_to_unit(value)
 		_emit_movement_changed()
 		return
 
@@ -399,39 +406,21 @@ func _handle_program_change(event: InputEventMIDI) -> void:
 
 func _handle_pitch_bend(event: InputEventMIDI) -> void:
 	joy_x = _normalize_pitch_bend_to_signed(event.pitch)
-	_last_joy_msg_ms = Time.get_ticks_msec()
 	_emit_movement_changed()
 
-func _process(_delta: float) -> void:
-	# Le joystick MPK mini 3 n'a pas de ressort de rappel. Si aucun message
-	# n'arrive depuis JOY_IDLE_TIMEOUT_MS, on considère que l'utilisateur a lâché
-	# et on force l'arrêt (envoi de zéros).
-	if joy_x == 0.0 and joy_y == 0.0:
-		return
-	if _last_joy_msg_ms == 0:
-		return
-	if Time.get_ticks_msec() - _last_joy_msg_ms >= JOY_IDLE_TIMEOUT_MS:
-		joy_x = 0.0
-		joy_y = 0.0
-		_emit_movement_changed()
-
 func _emit_movement_changed() -> void:
-	# Binaire comme les flèches clavier : au-delà du seuil = ±1, sinon 0.
-	# Y inversé : sur MPK mini 3, pousser le stick "vers l'avant" envoie une petite valeur CC1.
-	const THRESHOLD := 0.25
-	var x_out: float = 0.0
-	if joy_x > THRESHOLD:
-		x_out = 1.0
-	elif joy_x < -THRESHOLD:
-		x_out = -1.0
-	var y_out: float = 0.0
-	var joy_y_inv: float = -joy_y
-	if joy_y_inv > THRESHOLD:
-		y_out = 1.0
-	elif joy_y_inv < -THRESHOLD:
-		y_out = -1.0
-	print("[BINARY_JOY_V2] emit x=", x_out, " y=", y_out, " (from joy_x=", joy_x, " joy_y=", joy_y, ")")
-	movement_input_changed.emit(x_out, y_out)
+	# X : bi-directionnel avec deadzone (le pitch bend a un vrai retour à zéro
+	# spring-loaded, pas de protection anti-overshoot nécessaire ici).
+	var out_x := _apply_deadzone(joy_x, JOY_DEADZONE_X)
+	# Y : uni-directionnel (0..1). Deadzone simple : sous le seuil = pas de
+	# mouvement, au-dessus = avance. Pas de recul possible via joystick,
+	# l'utilisateur oriente la caméra pour changer de direction.
+	var out_y: float = 0.0
+	if joy_y >= JOY_DEADZONE_Y:
+		out_y = joy_y
+	print("MidiRouter emit movement -> x=", out_x, " y=", out_y,
+		" (raw x=", joy_x, " y=", joy_y, ")")
+	movement_input_changed.emit(out_x, out_y)
 
 func _normalize_cc_to_unit(value: int) -> float:
 	return clamp(float(value) / 127.0, 0.0, 1.0)

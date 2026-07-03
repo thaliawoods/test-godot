@@ -19,7 +19,13 @@ func _ensure_effects_bus() -> void:
 	reverb.dry = 1.0
 	reverb.room_size = 0.8
 	AudioServer.add_bus_effect(idx, reverb)
-	print("[AudioManager] Bus 'Effects' créé (filter + reverb)")
+	var limiter: AudioEffectLimiter = AudioEffectLimiter.new()
+	limiter.ceiling_db = -0.3
+	limiter.threshold_db = -3.0
+	limiter.soft_clip_db = 2.0
+	AudioServer.add_bus_effect(idx, limiter)
+	AudioServer.set_bus_volume_db(idx, 6.0)
+	print("[AudioManager] Bus 'Effects' créé (filter + reverb + limiter, +6 dB)")
 
 func trigger_event(event_id: String, velocity: int) -> void:
 	print("[AudioManager] trigger_event called: id=", event_id, " vel=", velocity)
@@ -41,7 +47,7 @@ func trigger_event(event_id: String, velocity: int) -> void:
 	if AudioServer.get_bus_index(bus_name) < 0:
 		bus_name = "Master"
 	player.bus = bus_name
-	var vol_db: float = lerpf(-20.0, 0.0, float(velocity) / 127.0)
+	var vol_db: float = lerpf(-3.0, 6.0, float(velocity) / 127.0)
 	player.volume_db = vol_db
 
 	add_child(player)
