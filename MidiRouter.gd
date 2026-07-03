@@ -78,17 +78,16 @@ var white_note_map: Dictionary = {
 }
 
 var black_note_map: Dictionary = {
-	49: "audio_event_01",
-	51: "audio_event_02",
-	54: "audio_event_03",
-	56: "audio_event_04",
-	58: "audio_event_05",
-	61: "audio_event_06",
-	63: "audio_event_07",
-	66: "audio_event_08",
-	68: "audio_event_09",
-	70: "audio_event_10",
-	73: "audio_event_11"
+	49: "audio_event_01",  # C#3
+	51: "audio_event_02",  # D#3
+	54: "audio_event_03",  # F#3
+	56: "audio_event_04",  # G#3
+	58: "audio_event_05",  # A#3
+	61: "audio_event_06",  # C#4
+	63: "audio_event_07",  # D#4 (ancien audio_event_8.mp3)
+	66: "audio_event_08",  # F#4 (Cut final groupe 1)
+	68: "audio_event_09",  # G#4 (Cut final groupe 3)
+	70: "audio_event_10"   # A#4 (final goupe 2)
 }
 
 var _midi_hud: CanvasLayer
