@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://bi7e7ilgl0b6e"
+path="res://.godot/imported/Alexandre.obj-8da9b76ab8bb99d42bfa2d739f40195a.mesh"
+
+[deps]
+
+files=["res://.godot/imported/Alexandre.obj-8da9b76ab8bb99d42bfa2d739f40195a.mesh"]
+
+source_file="res://photogrammetry/tagada_alexandre/Alexandre.obj"
+dest_files=["res://.godot/imported/Alexandre.obj-8da9b76ab8bb99d42bfa2d739f40195a.mesh", "res://.godot/imported/Alexandre.obj-8da9b76ab8bb99d42bfa2d739f40195a.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

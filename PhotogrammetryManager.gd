@@ -10,67 +10,123 @@ const MIN_HEIGHT := 6.0
 
 var photo_scene_map := {
 	"world_01": {
-		"photo_event_01": "res://photogrammetry/photo_event_01.tscn",
-		"photo_event_02": "res://photogrammetry/photo_event_02.tscn",
-		"photo_event_03": "res://photogrammetry/photo_event_03.tscn",
-		"photo_event_04": "res://photogrammetry/photo_event_04.tscn",
-		"photo_event_05": "res://photogrammetry/photo_event_05.tscn",
-		"photo_event_06": "res://photogrammetry/photo_event_06.tscn",
-		"photo_event_07": "res://photogrammetry/photo_event_07.tscn"
+		"colonnes":   "res://photogrammetry/photo_event_01.tscn",
+		"maison":     "res://photogrammetry/photo_event_02.tscn",
+		"pelouse_1":  "res://photogrammetry/photo_event_03.tscn",
+		"porte":      "res://photogrammetry/photo_event_04.tscn",
+		"statue":     "res://photogrammetry/photo_event_05.tscn",
+		"pelouse_2":  "res://photogrammetry/photo_event_06.tscn",
+		"lampadaire": "res://photogrammetry/photo_event_07.tscn",
+		"alexandre":  "res://photogrammetry/photo_event_08.tscn",
+		"cheyenne":   "res://photogrammetry/photo_event_09.tscn",
+		"emma":       "res://photogrammetry/photo_event_10.tscn",
+		"lucien":     "res://photogrammetry/photo_event_11.tscn",
+		"mayess":     "res://photogrammetry/photo_event_12.tscn",
+		"pierre":     "res://photogrammetry/photo_event_13.tscn",
+		"tagada_1":   "res://photogrammetry/photo_event_14.tscn",
+		"tagada_2":   "res://photogrammetry/photo_event_15.tscn"
 	},
 	"world_02": {
-		"photo_event_01": "res://photogrammetry/photo_event_01.tscn",
-		"photo_event_02": "res://photogrammetry/photo_event_02.tscn",
-		"photo_event_03": "res://photogrammetry/photo_event_03.tscn",
-		"photo_event_04": "res://photogrammetry/photo_event_04.tscn",
-		"photo_event_05": "res://photogrammetry/photo_event_05.tscn",
-		"photo_event_06": "res://photogrammetry/photo_event_06.tscn",
-		"photo_event_07": "res://photogrammetry/photo_event_07.tscn"
+		"colonnes":   "res://photogrammetry/photo_event_01.tscn",
+		"maison":     "res://photogrammetry/photo_event_02.tscn",
+		"pelouse_1":  "res://photogrammetry/photo_event_03.tscn",
+		"porte":      "res://photogrammetry/photo_event_04.tscn",
+		"statue":     "res://photogrammetry/photo_event_05.tscn",
+		"pelouse_2":  "res://photogrammetry/photo_event_06.tscn",
+		"lampadaire": "res://photogrammetry/photo_event_07.tscn",
+		"alexandre":  "res://photogrammetry/photo_event_08.tscn",
+		"cheyenne":   "res://photogrammetry/photo_event_09.tscn",
+		"emma":       "res://photogrammetry/photo_event_10.tscn",
+		"lucien":     "res://photogrammetry/photo_event_11.tscn",
+		"mayess":     "res://photogrammetry/photo_event_12.tscn",
+		"pierre":     "res://photogrammetry/photo_event_13.tscn",
+		"tagada_1":   "res://photogrammetry/photo_event_14.tscn",
+		"tagada_2":   "res://photogrammetry/photo_event_15.tscn"
 	},
 	"world_03": {
-		"photo_event_01": "res://photogrammetry/photo_event_01.tscn",
-		"photo_event_02": "res://photogrammetry/photo_event_02.tscn",
-		"photo_event_03": "res://photogrammetry/photo_event_03.tscn",
-		"photo_event_04": "res://photogrammetry/photo_event_04.tscn",
-		"photo_event_05": "res://photogrammetry/photo_event_05.tscn",
-		"photo_event_06": "res://photogrammetry/photo_event_06.tscn",
-		"photo_event_07": "res://photogrammetry/photo_event_07.tscn"
+		"colonnes":   "res://photogrammetry/photo_event_01.tscn",
+		"maison":     "res://photogrammetry/photo_event_02.tscn",
+		"pelouse_1":  "res://photogrammetry/photo_event_03.tscn",
+		"porte":      "res://photogrammetry/photo_event_04.tscn",
+		"statue":     "res://photogrammetry/photo_event_05.tscn",
+		"pelouse_2":  "res://photogrammetry/photo_event_06.tscn",
+		"lampadaire": "res://photogrammetry/photo_event_07.tscn",
+		"alexandre":  "res://photogrammetry/photo_event_08.tscn",
+		"cheyenne":   "res://photogrammetry/photo_event_09.tscn",
+		"emma":       "res://photogrammetry/photo_event_10.tscn",
+		"lucien":     "res://photogrammetry/photo_event_11.tscn",
+		"mayess":     "res://photogrammetry/photo_event_12.tscn",
+		"pierre":     "res://photogrammetry/photo_event_13.tscn",
+		"tagada_1":   "res://photogrammetry/photo_event_14.tscn",
+		"tagada_2":   "res://photogrammetry/photo_event_15.tscn"
 	},
 	"world_04": {
-		"photo_event_01": "res://photogrammetry/photo_event_01.tscn",
-		"photo_event_02": "res://photogrammetry/photo_event_02.tscn",
-		"photo_event_03": "res://photogrammetry/photo_event_03.tscn",
-		"photo_event_04": "res://photogrammetry/photo_event_04.tscn",
-		"photo_event_05": "res://photogrammetry/photo_event_05.tscn",
-		"photo_event_06": "res://photogrammetry/photo_event_06.tscn",
-		"photo_event_07": "res://photogrammetry/photo_event_07.tscn"
+		"colonnes":   "res://photogrammetry/photo_event_01.tscn",
+		"maison":     "res://photogrammetry/photo_event_02.tscn",
+		"pelouse_1":  "res://photogrammetry/photo_event_03.tscn",
+		"porte":      "res://photogrammetry/photo_event_04.tscn",
+		"statue":     "res://photogrammetry/photo_event_05.tscn",
+		"pelouse_2":  "res://photogrammetry/photo_event_06.tscn",
+		"lampadaire": "res://photogrammetry/photo_event_07.tscn",
+		"alexandre":  "res://photogrammetry/photo_event_08.tscn",
+		"cheyenne":   "res://photogrammetry/photo_event_09.tscn",
+		"emma":       "res://photogrammetry/photo_event_10.tscn",
+		"lucien":     "res://photogrammetry/photo_event_11.tscn",
+		"mayess":     "res://photogrammetry/photo_event_12.tscn",
+		"pierre":     "res://photogrammetry/photo_event_13.tscn",
+		"tagada_1":   "res://photogrammetry/photo_event_14.tscn",
+		"tagada_2":   "res://photogrammetry/photo_event_15.tscn"
 	},
 	"world_05": {
-		"photo_event_01": "res://photogrammetry/photo_event_01.tscn",
-		"photo_event_02": "res://photogrammetry/photo_event_02.tscn",
-		"photo_event_03": "res://photogrammetry/photo_event_03.tscn",
-		"photo_event_04": "res://photogrammetry/photo_event_04.tscn",
-		"photo_event_05": "res://photogrammetry/photo_event_05.tscn",
-		"photo_event_06": "res://photogrammetry/photo_event_06.tscn",
-		"photo_event_07": "res://photogrammetry/photo_event_07.tscn"
+		"colonnes":   "res://photogrammetry/photo_event_01.tscn",
+		"maison":     "res://photogrammetry/photo_event_02.tscn",
+		"pelouse_1":  "res://photogrammetry/photo_event_03.tscn",
+		"porte":      "res://photogrammetry/photo_event_04.tscn",
+		"statue":     "res://photogrammetry/photo_event_05.tscn",
+		"pelouse_2":  "res://photogrammetry/photo_event_06.tscn",
+		"lampadaire": "res://photogrammetry/photo_event_07.tscn",
+		"alexandre":  "res://photogrammetry/photo_event_08.tscn",
+		"cheyenne":   "res://photogrammetry/photo_event_09.tscn",
+		"emma":       "res://photogrammetry/photo_event_10.tscn",
+		"lucien":     "res://photogrammetry/photo_event_11.tscn",
+		"mayess":     "res://photogrammetry/photo_event_12.tscn",
+		"pierre":     "res://photogrammetry/photo_event_13.tscn",
+		"tagada_1":   "res://photogrammetry/photo_event_14.tscn",
+		"tagada_2":   "res://photogrammetry/photo_event_15.tscn"
 	},
 	"world_06": {
-		"photo_event_01": "res://photogrammetry/photo_event_01.tscn",
-		"photo_event_02": "res://photogrammetry/photo_event_02.tscn",
-		"photo_event_03": "res://photogrammetry/photo_event_03.tscn",
-		"photo_event_04": "res://photogrammetry/photo_event_04.tscn",
-		"photo_event_05": "res://photogrammetry/photo_event_05.tscn",
-		"photo_event_06": "res://photogrammetry/photo_event_06.tscn",
-		"photo_event_07": "res://photogrammetry/photo_event_07.tscn"
+		"colonnes":   "res://photogrammetry/photo_event_01.tscn",
+		"maison":     "res://photogrammetry/photo_event_02.tscn",
+		"pelouse_1":  "res://photogrammetry/photo_event_03.tscn",
+		"porte":      "res://photogrammetry/photo_event_04.tscn",
+		"statue":     "res://photogrammetry/photo_event_05.tscn",
+		"pelouse_2":  "res://photogrammetry/photo_event_06.tscn",
+		"lampadaire": "res://photogrammetry/photo_event_07.tscn",
+		"alexandre":  "res://photogrammetry/photo_event_08.tscn",
+		"cheyenne":   "res://photogrammetry/photo_event_09.tscn",
+		"emma":       "res://photogrammetry/photo_event_10.tscn",
+		"lucien":     "res://photogrammetry/photo_event_11.tscn",
+		"mayess":     "res://photogrammetry/photo_event_12.tscn",
+		"pierre":     "res://photogrammetry/photo_event_13.tscn",
+		"tagada_1":   "res://photogrammetry/photo_event_14.tscn",
+		"tagada_2":   "res://photogrammetry/photo_event_15.tscn"
 	},
 	"world_07": {
-		"photo_event_01": "res://photogrammetry/photo_event_01.tscn",
-		"photo_event_02": "res://photogrammetry/photo_event_02.tscn",
-		"photo_event_03": "res://photogrammetry/photo_event_03.tscn",
-		"photo_event_04": "res://photogrammetry/photo_event_04.tscn",
-		"photo_event_05": "res://photogrammetry/photo_event_05.tscn",
-		"photo_event_06": "res://photogrammetry/photo_event_06.tscn",
-		"photo_event_07": "res://photogrammetry/photo_event_07.tscn"
+		"colonnes":   "res://photogrammetry/photo_event_01.tscn",
+		"maison":     "res://photogrammetry/photo_event_02.tscn",
+		"pelouse_1":  "res://photogrammetry/photo_event_03.tscn",
+		"porte":      "res://photogrammetry/photo_event_04.tscn",
+		"statue":     "res://photogrammetry/photo_event_05.tscn",
+		"pelouse_2":  "res://photogrammetry/photo_event_06.tscn",
+		"lampadaire": "res://photogrammetry/photo_event_07.tscn",
+		"alexandre":  "res://photogrammetry/photo_event_08.tscn",
+		"cheyenne":   "res://photogrammetry/photo_event_09.tscn",
+		"emma":       "res://photogrammetry/photo_event_10.tscn",
+		"lucien":     "res://photogrammetry/photo_event_11.tscn",
+		"mayess":     "res://photogrammetry/photo_event_12.tscn",
+		"pierre":     "res://photogrammetry/photo_event_13.tscn",
+		"tagada_1":   "res://photogrammetry/photo_event_14.tscn",
+		"tagada_2":   "res://photogrammetry/photo_event_15.tscn"
 	}
 }
 
@@ -152,6 +208,11 @@ func _auto_place(node: Node3D) -> void:
 			if scaled_height < MIN_HEIGHT:
 				scale_factor = MIN_HEIGHT / height_extent
 				print("FLAT object: new scale_factor -> ", scale_factor)
+		# Multiplicateur d'échelle spécifique à l'objet (metadata "scale_multiplier")
+		if node.has_meta("scale_multiplier"):
+			var mult: float = float(node.get_meta("scale_multiplier"))
+			scale_factor *= mult
+			print("scale_multiplier meta -> ×", mult, " | final scale_factor -> ", scale_factor)
 		node.scale = Vector3(scale_factor, scale_factor, scale_factor)
 	else:
 		node.scale = Vector3(10, 10, 10)

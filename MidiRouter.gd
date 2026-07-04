@@ -14,9 +14,14 @@ signal hand_right_flip_y_requested()
 
 var joy_x: float = 0.0
 var joy_y: float = 0.0
-const JOY_DEADZONE := 0.08
-var _last_joy_msg_ms: int = 0
-const JOY_IDLE_TIMEOUT_MS := 300
+
+# Config joystick MPK mini 3 :
+#   X (pitch bend) : bi-directionnel, 0=gauche, 8192=centre, 16383=droite
+#   Y (CC1)        : uni-directionnel, 0..127 = uniquement forward
+# → Recule impossible via le joystick : l'utilisateur tourne la caméra
+#   pour changer de direction. Simple deadzone suffit.
+const JOY_DEADZONE_X := 0.20
+const JOY_DEADZONE_Y := 0.15
 
 # Si tes pads reviennent plus tard en NOTE_ON, on garde aussi cette map.
 var world_pad_map: Dictionary = {
@@ -55,35 +60,34 @@ var knob_fx_map: Dictionary = {
 }
 
 var white_note_map: Dictionary = {
-	48: "photo_event_01",
-	50: "photo_event_02",
-	52: "photo_event_03",
-	53: "photo_event_04",
-	55: "photo_event_05",
-	57: "photo_event_06",
-	59: "photo_event_07",
-	60: "photo_event_08",
-	62: "photo_event_09",
-	64: "photo_event_10",
-	65: "photo_event_11",
-	67: "photo_event_12",
-	69: "photo_event_13",
-	71: "photo_event_14",
-	72: "photo_event_15",
-	74: "photo_event_07"
+	48: "colonnes",       # C3
+	50: "maison",         # D3
+	52: "pelouse_1",      # E3
+	53: "porte",          # F3
+	55: "statue",         # G3
+	57: "pelouse_2",      # A3
+	59: "lampadaire",     # B3
+	60: "alexandre",      # C4
+	62: "cheyenne",       # D4
+	64: "emma",           # E4
+	65: "lucien",         # F4
+	67: "mayess",         # G4
+	69: "pierre",         # A4
+	71: "tagada_1",       # B4
+	72: "tagada_2"        # C5
 }
 
 var black_note_map: Dictionary = {
-	49: "audio_event_01",
-	51: "audio_event_02",
-	54: "audio_event_03",
-	56: "audio_event_04",
-	58: "audio_event_05",
-	61: "audio_event_06",
-	63: "audio_event_07",
-	66: "audio_event_08",
-	68: "audio_event_09",
-	70: "audio_event_10"
+	49: "audio_event_01",  # C#3
+	51: "audio_event_02",  # D#3
+	54: "audio_event_03",  # F#3
+	56: "audio_event_04",  # G#3
+	58: "audio_event_05",  # A#3
+	61: "audio_event_06",  # C#4
+	63: "audio_event_07",  # D#4 (ancien audio_event_8.mp3)
+	66: "audio_event_08",  # F#4 (Cut final groupe 1)
+	68: "audio_event_09",  # G#4 (Cut final groupe 3)
+	70: "audio_event_10"   # A#4 (final goupe 2)
 }
 
 var _midi_hud: CanvasLayer
@@ -116,23 +120,26 @@ func _build_midi_hud() -> void:
 	_midi_hud_panel.offset_bottom = 140.0
 
 	var sb := StyleBoxFlat.new()
-	sb.bg_color = Color(0, 0, 0, 0.45)
+	sb.bg_color = Color(0, 0, 0, 0.25)
 	sb.set_corner_radius_all(8)
 	sb.set_border_width_all(1)
-	sb.border_color = Color(1, 1, 1, 0.12)
+	sb.border_color = Color(1, 1, 1, 0.08)
 	_midi_hud_panel.add_theme_stylebox_override("panel", sb)
 	_midi_hud.add_child(_midi_hud_panel)
 
 	var margin := MarginContainer.new()
-	margin.add_theme_constant_override("margin_left", 18)
-	margin.add_theme_constant_override("margin_right", 18)
-	margin.add_theme_constant_override("margin_top", 12)
-	margin.add_theme_constant_override("margin_bottom", 12)
+	margin.add_theme_constant_override("margin_left", 24)
+	margin.add_theme_constant_override("margin_right", 24)
+	margin.add_theme_constant_override("margin_top", 16)
+	margin.add_theme_constant_override("margin_bottom", 16)
 	_midi_hud_panel.add_child(margin)
 
 	_midi_hud_label = Label.new()
-	_midi_hud_label.add_theme_color_override("font_color", Color(1, 1, 1, 0.9))
-	_midi_hud_label.add_theme_font_size_override("font_size", 16)
+	_midi_hud_label.add_theme_color_override("font_color", Color(1, 1, 1, 0.85))
+	var tutorial_font: Font = load("res://assets/fonts/Adelphe-Trouble-FructidorRegular.otf") as Font
+	if tutorial_font != null:
+		_midi_hud_label.add_theme_font_override("font", tutorial_font)
+	_midi_hud_label.add_theme_font_size_override("font_size", 18)
 	_midi_hud_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	margin.add_child(_midi_hud_label)
 
@@ -204,12 +211,21 @@ var keyboard_world_map := {
 }
 
 var keyboard_photo_map := {
-	KEY_A: "photo_event_01",
-	KEY_S: "photo_event_02",
-	KEY_D: "photo_event_03",
-	KEY_F: "photo_event_04",
-	KEY_G: "photo_event_05",
-	KEY_H: "photo_event_06"
+	KEY_A: "colonnes",
+	KEY_S: "maison",
+	KEY_D: "pelouse_1",
+	KEY_F: "porte",
+	KEY_G: "statue",
+	KEY_H: "pelouse_2",
+	KEY_J: "lampadaire",
+	KEY_K: "alexandre",
+	KEY_L: "cheyenne",
+	KEY_Z: "emma",
+	KEY_X: "lucien",
+	KEY_C: "mayess",
+	KEY_V: "pierre",
+	KEY_B: "tagada_1",
+	KEY_N: "tagada_2"
 }
 
 var keyboard_audio_map := {
@@ -220,15 +236,10 @@ var keyboard_audio_map := {
 	KEY_T: "audio_event_05",
 	KEY_Y: "audio_event_06",
 	KEY_U: "audio_event_07",
-	KEY_I: "audio_event_08"
+	KEY_I: "audio_event_08",
+	KEY_O: "audio_event_09",
+	KEY_P: "audio_event_10"
 }
-
-const HAND_LEFT_KEY := KEY_J
-const HAND_RIGHT_KEY := KEY_K
-const HAND_LEFT_FLIP_X_KEY := KEY_N
-const HAND_RIGHT_FLIP_X_KEY := KEY_M
-const HAND_LEFT_FLIP_Y_KEY := KEY_B
-const HAND_RIGHT_FLIP_Y_KEY := KEY_COMMA
 
 var _user_gesture_done := false
 
@@ -280,31 +291,6 @@ func _handle_keyboard_event(event: InputEventKey) -> void:
 		audio_event_requested.emit(audio_event_id, 100)
 		return
 
-	if key == HAND_LEFT_KEY:
-		print("Hand left cycle (keyboard)")
-		hand_left_cycle_requested.emit()
-		return
-
-	if key == HAND_RIGHT_KEY:
-		print("Hand right cycle (keyboard)")
-		hand_right_cycle_requested.emit()
-		return
-
-	if key == HAND_LEFT_FLIP_X_KEY:
-		hand_left_flip_x_requested.emit()
-		return
-
-	if key == HAND_RIGHT_FLIP_X_KEY:
-		hand_right_flip_x_requested.emit()
-		return
-
-	if key == HAND_LEFT_FLIP_Y_KEY:
-		hand_left_flip_y_requested.emit()
-		return
-
-	if key == HAND_RIGHT_FLIP_Y_KEY:
-		hand_right_flip_y_requested.emit()
-		return
 
 func _handle_midi_event(event: InputEventMIDI) -> void:
 	match event.message:
@@ -355,10 +341,9 @@ func _handle_control_change(event: InputEventMIDI) -> void:
 	var cc := event.controller_number
 	var value := event.controller_value
 
-	# Joystick Y
+	# Joystick Y (uni-directionnel : val 0..127 → 0..1, forward uniquement)
 	if cc == 1:
-		joy_y = _normalize_cc_to_signed(value)
-		_last_joy_msg_ms = Time.get_ticks_msec()
+		joy_y = _normalize_cc_to_unit(value)
 		_emit_movement_changed()
 		return
 
@@ -399,39 +384,21 @@ func _handle_program_change(event: InputEventMIDI) -> void:
 
 func _handle_pitch_bend(event: InputEventMIDI) -> void:
 	joy_x = _normalize_pitch_bend_to_signed(event.pitch)
-	_last_joy_msg_ms = Time.get_ticks_msec()
 	_emit_movement_changed()
 
-func _process(_delta: float) -> void:
-	# Le joystick MPK mini 3 n'a pas de ressort de rappel. Si aucun message
-	# n'arrive depuis JOY_IDLE_TIMEOUT_MS, on considère que l'utilisateur a lâché
-	# et on force l'arrêt (envoi de zéros).
-	if joy_x == 0.0 and joy_y == 0.0:
-		return
-	if _last_joy_msg_ms == 0:
-		return
-	if Time.get_ticks_msec() - _last_joy_msg_ms >= JOY_IDLE_TIMEOUT_MS:
-		joy_x = 0.0
-		joy_y = 0.0
-		_emit_movement_changed()
-
 func _emit_movement_changed() -> void:
-	# Binaire comme les flèches clavier : au-delà du seuil = ±1, sinon 0.
-	# Y inversé : sur MPK mini 3, pousser le stick "vers l'avant" envoie une petite valeur CC1.
-	const THRESHOLD := 0.25
-	var x_out: float = 0.0
-	if joy_x > THRESHOLD:
-		x_out = 1.0
-	elif joy_x < -THRESHOLD:
-		x_out = -1.0
-	var y_out: float = 0.0
-	var joy_y_inv: float = -joy_y
-	if joy_y_inv > THRESHOLD:
-		y_out = 1.0
-	elif joy_y_inv < -THRESHOLD:
-		y_out = -1.0
-	print("[BINARY_JOY_V2] emit x=", x_out, " y=", y_out, " (from joy_x=", joy_x, " joy_y=", joy_y, ")")
-	movement_input_changed.emit(x_out, y_out)
+	# X : bi-directionnel avec deadzone (le pitch bend a un vrai retour à zéro
+	# spring-loaded, pas de protection anti-overshoot nécessaire ici).
+	var out_x := _apply_deadzone(joy_x, JOY_DEADZONE_X)
+	# Y : uni-directionnel (0..1). Deadzone simple : sous le seuil = pas de
+	# mouvement, au-dessus = avance. Pas de recul possible via joystick,
+	# l'utilisateur oriente la caméra pour changer de direction.
+	var out_y: float = 0.0
+	if joy_y >= JOY_DEADZONE_Y:
+		out_y = joy_y
+	print("MidiRouter emit movement -> x=", out_x, " y=", out_y,
+		" (raw x=", joy_x, " y=", joy_y, ")")
+	movement_input_changed.emit(out_x, out_y)
 
 func _normalize_cc_to_unit(value: int) -> float:
 	return clamp(float(value) / 127.0, 0.0, 1.0)
